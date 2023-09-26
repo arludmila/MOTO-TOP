@@ -18,9 +18,6 @@ namespace Contracts.DTOs.Entities
         public int DocumentNumber { get; set; }
         public int InvoiceId { get; set; }
         public int ClientId { get; set; }
-        public static BillingTransaction Convert(BillingTransactionDto dto)
-        {
-            return DtoMapper.CreateEntityFromDto<BillingTransaction>(dto);
-        }
+
     }
 }

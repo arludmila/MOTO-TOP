@@ -1,35 +1,34 @@
 ﻿using Business;
-using Contracts.DTOs.Entities;
 using Contracts.Utils;
-using Entities.Core;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace API.Controllers.Entities
+namespace API.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
-    public class OrdersController : ControllerBase
+    public class BaseController<TEntity, TDto> : ControllerBase where TEntity : class, new()
     {
-        private readonly GenericService<Order> _service;
-        public OrdersController(GenericService<Order> service)
+        protected readonly GenericService<TEntity> _service;
+
+        protected BaseController(GenericService<TEntity> service)
         {
             _service = service;
         }
+
         [HttpPost]
-        public async Task<IActionResult> CreateAsync([FromBody] OrderDto dto)
+        public async Task<IActionResult> CreateAsync([FromBody] TDto dto)
         {
             try
             {
-                var createdEntity = await _service.CreateAsync(DtoMapper.CreateEntityFromDto<Order>(dto));
-                return Ok(createdEntity); // Return the created entity as JSON response.
+                var createdEntity = await _service.CreateAsync(DtoMapper.CreateEntityFromDto<TEntity>(dto));
+                return Ok(createdEntity);
             }
             catch (Exception ex)
             {
-                // Handle any exceptions, log them, and return an error response.
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdAsync(int id)
         {
@@ -38,64 +37,63 @@ namespace API.Controllers.Entities
                 var entity = await _service.GetByIdAsync(id);
                 if (entity == null)
                 {
-                    return NotFound(); // Return a 404 Not Found response if the entity doesn't exist.
+                    return NotFound();
                 }
-                return Ok(entity); // Return the entity as a JSON response.
+                return Ok(entity);
             }
             catch (Exception ex)
             {
-                // Handle any exceptions, log them, and return an error response.
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
             try
             {
                 var entities = await _service.GetAllAsync();
-                return Ok(entities); // Return the entities as a JSON response.
+                return Ok(entities);
             }
             catch (Exception ex)
             {
-                // Handle any exceptions, log them, and return an error response.
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAsync(int id, [FromBody] OrderDto dto)
+        public async Task<IActionResult> UpdateAsync(int id, [FromBody] TDto dto)
         {
             try
             {
                 var existingEntity = await _service.GetByIdAsync(id);
                 if (existingEntity == null)
                 {
-                    return NotFound(); // Return a 404 Not Found response if the entity doesn't exist.
+                    return NotFound();
                 }
 
                 DtoMapper.MapDtoToEntity(dto, existingEntity);
 
                 await _service.UpdateAsync(existingEntity);
 
-                return Ok(existingEntity); // Return the updated Category entity as a JSON response.
+                return Ok(existingEntity);
             }
             catch (Exception ex)
             {
-                // Handle any exceptions, log them, and return an error response.
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(int id)
         {
             try
             {
                 await _service.DeleteAsync(id);
-                return NoContent(); // Return a 204 No Content response on successful deletion.
+                return NoContent();
             }
             catch (Exception ex)
             {
-                // Handle any exceptions, log them, and return an error response.
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }

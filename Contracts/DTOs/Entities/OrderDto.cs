@@ -18,9 +18,5 @@ namespace Contracts.DTOs.Entities
         public int SellerId { get; set; }
         public int? TransportCompanyId { get; set; }
 
-        public static Order Convert(OrderDto dto)
-        {
-            return DtoMapper.CreateEntityFromDto<Order>(dto);
-        }
     }
 }
