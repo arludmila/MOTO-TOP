@@ -1,13 +1,15 @@
-﻿using System;
+﻿using Contracts.Utils;
+using Entities.Core;
+using Entities.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Entities.Enums;
 
-namespace Entities.Core
+namespace Contracts.DTOs
 {
-    public class Order : EntityBase
+    public class OrderDto
     {
         public ShipmentStatus ShipmentStatus { get; set; }
         public DateTime DateSent { get; set; }
@@ -15,9 +17,10 @@ namespace Entities.Core
         public int ClientId { get; set; }
         public int SellerId { get; set; }
         public int? TransportCompanyId { get; set; }
-        public TransportCompany? TransportCompany { get; set; }
-        public Client Client { get; set; }
-        public Seller Seller { get; set; }
 
+        public static Order Convert(OrderDto dto)
+        {
+            return DtoMapper.CreateEntityFromDto<Order>(dto);
+        }
     }
 }

@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Entities.Core
 {
-    public class Invoice
+    public class Invoice : EntityBase
     {
-        public int Id { get; set; }
         public DateTime Date { get; set; }
         public double Amount { get; set; }
         public int OrderId { get; set; }

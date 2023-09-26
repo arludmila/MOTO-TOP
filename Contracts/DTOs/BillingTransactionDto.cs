@@ -1,13 +1,15 @@
-﻿using Entities.Enums;
+﻿using Contracts.Utils;
+using Entities.Core;
+using Entities.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entities.Core
+namespace Contracts.DTOs
 {
-    public class BillingTransaction : EntityBase
+    public class BillingTransactionDto
     {
         public string MyProperty { get; set; }
         public PaymentMethods PaymentMethod { get; set; }
@@ -17,8 +19,9 @@ namespace Entities.Core
         public int DocumentNumber { get; set; }
         public int InvoiceId { get; set; }
         public int ClientId { get; set; }
-        public Invoice Invoice { get; set; }
-        public Client Client { get; set; }
-
+        public static BillingTransaction Convert(BillingTransactionDto dto)
+        {
+            return DtoMapper.CreateEntityFromDto<BillingTransaction>(dto);
+        }
     }
 }

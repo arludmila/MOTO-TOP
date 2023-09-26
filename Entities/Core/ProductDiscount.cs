@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Entities.Core
 {
-    public class ProductDiscount
+    public class ProductDiscount : EntityBase
     {
-        public int Id { get; set; }
         public string Description { get; set; }
         public double Percentage { get; set; }
     }

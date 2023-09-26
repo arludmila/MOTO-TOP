@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Entities.Core
 {
-    public class TransportCompany
+    public class TransportCompany : EntityBase
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public string Phone { get; set; }
 

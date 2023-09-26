@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.Repositories
+namespace Entities.Core
 {
-    internal class IRepository
+    public class EntityBase
     {
+        public int Id { get; set; }
     }
 }
