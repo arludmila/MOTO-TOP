@@ -9,7 +9,6 @@ namespace Entities.Core
 {
     public class BillingTransaction : EntityBase
     {
-        public string MyProperty { get; set; }
         public PaymentMethods PaymentMethod { get; set; }
         // debito -> + (positivo) ; credito -> - (negativo)
         public double Amount { get; set; }

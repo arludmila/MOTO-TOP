@@ -151,7 +151,7 @@ namespace Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ShipmentStatus = table.Column<int>(type: "int", nullable: false),
+                    ShipmentStatus = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DateSent = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateReceived = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ClientId = table.Column<int>(type: "int", nullable: false),
@@ -258,7 +258,7 @@ namespace Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     MyProperty = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PaymentMethod = table.Column<int>(type: "int", nullable: false),
+                    PaymentMethod = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Amount = table.Column<double>(type: "float", nullable: false),
                     DocumentType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DocumentNumber = table.Column<int>(type: "int", nullable: false),

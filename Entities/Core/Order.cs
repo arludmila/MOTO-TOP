@@ -9,7 +9,7 @@ namespace Entities.Core
 {
     public class Order : EntityBase
     {
-        public ShipmentStatus ShipmentStatus { get; set; }
+        public ShipmentStatuses ShipmentStatus { get; set; }
         public DateTime DateSent { get; set; }
         public DateTime DateReceived { get; set; }
         public int ClientId { get; set; }

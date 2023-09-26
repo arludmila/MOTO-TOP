@@ -7,11 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Contracts.DTOs
+namespace Contracts.DTOs.Entities
 {
     public class BillingTransactionDto
     {
-        public string MyProperty { get; set; }
         public PaymentMethods PaymentMethod { get; set; }
         // debito -> + (positivo) ; credito -> - (negativo)
         public double Amount { get; set; }

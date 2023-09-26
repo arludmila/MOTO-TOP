@@ -8,14 +8,12 @@ using System.Threading.Tasks;
 
 namespace Entities.Enums
 {
-    //[JsonConverter(typeof(StringEnumConverter))]
-    public enum ShipmentStatus
+    public enum ShipmentStatuses
     {
         Received,
         Preparing,
         Shipped
     }
-    //[JsonConverter(typeof(StringEnumConverter))]
     public enum PaymentMethods
     {
         Cash,

@@ -1,27 +1,27 @@
 ﻿using Business;
-using Contracts.DTOs;
+using Contracts.DTOs.Entities;
 using Contracts.Utils;
 using Entities.Core;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace API.Controllers
+namespace API.Controllers.Entities
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TransportCompaniesController : ControllerBase
+    public class ProductDiscountsController : ControllerBase
     {
-        private readonly GenericService<TransportCompany> _service;
-        public TransportCompaniesController(GenericService<TransportCompany> service)
+        private readonly GenericService<ProductDiscount> _service;
+        public ProductDiscountsController(GenericService<ProductDiscount> service)
         {
             _service = service;
         }
         [HttpPost]
-        public async Task<IActionResult> CreateAsync([FromBody] TransportCompanyDto dto)
+        public async Task<IActionResult> CreateAsync([FromBody] ProductDiscountDto dto)
         {
             try
             {
-                var createdEntity = await _service.CreateAsync(TransportCompanyDto.Convert(dto));
+                var createdEntity = await _service.CreateAsync(ProductDiscountDto.Convert(dto));
                 return Ok(createdEntity); // Return the created entity as JSON response.
             }
             catch (Exception ex)
@@ -63,7 +63,7 @@ namespace API.Controllers
             }
         }
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAsync(int id, [FromBody] TransportCompanyDto dto)
+        public async Task<IActionResult> UpdateAsync(int id, [FromBody] ProductDiscountDto dto)
         {
             try
             {

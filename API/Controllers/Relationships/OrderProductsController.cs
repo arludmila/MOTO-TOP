@@ -1,27 +1,29 @@
 ﻿using Business;
-using Contracts.DTOs;
+using Contracts.DTOs.Entities;
+using Contracts.DTOs.Relationships;
 using Contracts.Utils;
 using Entities.Core;
+using Entities.Relationships;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace API.Controllers
+namespace API.Controllers.Relationships
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class InvoicesController : ControllerBase
+    public class OrderProductsController : ControllerBase
     {
-        private readonly GenericService<Invoice> _service;
-        public InvoicesController(GenericService<Invoice> service)
+        private readonly GenericService<OrderProduct> _service;
+        public OrderProductsController(GenericService<OrderProduct> service)
         {
             _service = service;
         }
         [HttpPost]
-        public async Task<IActionResult> CreateAsync([FromBody] InvoiceDto dto)
+        public async Task<IActionResult> CreateAsync([FromBody] OrderProductDto dto)
         {
             try
             {
-                var createdEntity = await _service.CreateAsync(InvoiceDto.Convert(dto));
+                var createdEntity = await _service.CreateAsync(OrderProductDto.Convert(dto));
                 return Ok(createdEntity); // Return the created entity as JSON response.
             }
             catch (Exception ex)
@@ -63,7 +65,7 @@ namespace API.Controllers
             }
         }
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAsync(int id, [FromBody] InvoiceDto dto)
+        public async Task<IActionResult> UpdateAsync(int id, [FromBody] OrderProductDto dto)
         {
             try
             {

@@ -7,11 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Contracts.DTOs
+namespace Contracts.DTOs.Entities
 {
     public class OrderDto
     {
-        public ShipmentStatus ShipmentStatus { get; set; }
+        public ShipmentStatuses ShipmentStatus { get; set; }
         public DateTime DateSent { get; set; }
         public DateTime DateReceived { get; set; }
         public int ClientId { get; set; }

@@ -1,7 +1,10 @@
 ﻿using Entities.Core;
+using Entities.Enums;
 using Entities.Relationships;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.Configuration;
+using System.Xml.Linq;
 
 namespace Data
 {
@@ -23,6 +26,7 @@ namespace Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            // claves compuestas
             modelBuilder.Entity<OrderProduct>()
                 .HasKey(op => new { op.ProductId, op.OrderId });
             modelBuilder.Entity<ProductHasDiscount>()
@@ -31,6 +35,15 @@ namespace Data
              .HasKey(svc => new { svc.SellerId, svc.ClientId });
             modelBuilder.Entity<SupplierProvidesProduct>()
                .HasKey(spp => new { spp.ProductId, spp.SupplierId });
+            // enums a string
+            modelBuilder
+                .Entity<Order>()
+                .Property(d => d.ShipmentStatus)
+                .HasConversion(new EnumToStringConverter<ShipmentStatuses>());
+            modelBuilder
+                .Entity<BillingTransaction>()
+                .Property(d => d.PaymentMethod)
+                .HasConversion(new EnumToStringConverter<PaymentMethods>());
         }
         // Entities tables
         public DbSet<BillingTransaction> BillingTransactions { get; set; }

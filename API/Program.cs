@@ -3,6 +3,7 @@ using Business;
 using Data;
 using Data.Repositories;
 using Entities.Core;
+using Entities.Relationships;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +28,10 @@ Type[] entityTypes = new Type[]
     typeof(ProductDiscount),
     typeof(Invoice),
     typeof(BillingTransaction),
+    typeof(OrderProduct),
+    typeof(ProductHasDiscount),
+    typeof(SellerVisitClient),
+    typeof(SupplierProvidesProduct),
 };
 
 // Use a foreach loop to register the generic types
