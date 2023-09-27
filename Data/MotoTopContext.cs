@@ -3,8 +3,6 @@ using Entities.Enums;
 using Entities.Relationships;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Microsoft.Extensions.Configuration;
-using System.Xml.Linq;
 
 namespace Data
 {
@@ -29,11 +27,11 @@ namespace Data
             // claves compuestas
             modelBuilder.Entity<OrderProduct>()
                 .HasKey(op => new { op.ProductId, op.OrderId });
-            modelBuilder.Entity<ProductHasDiscount>()
+            modelBuilder.Entity<ProductDiscount>()
               .HasKey(p => new { p.ProductId, p.ProductDiscountId });
-            modelBuilder.Entity<SellerVisitClient>()
+            modelBuilder.Entity<SellerClient>()
              .HasKey(svc => new { svc.SellerId, svc.ClientId });
-            modelBuilder.Entity<SupplierProvidesProduct>()
+            modelBuilder.Entity<SupplierProduct>()
                .HasKey(spp => new { spp.ProductId, spp.SupplierId });
             // enums a string
             modelBuilder
@@ -52,15 +50,15 @@ namespace Data
         public DbSet<Invoice> Invoices { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Product> Products { get; set; }
-        public DbSet<ProductDiscount> ProductDiscounts { get; set; }
+        public DbSet<Discount> ProductDiscounts { get; set; }
         public DbSet<Seller> Sellers { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
 
         public DbSet<TransportCompany> TransportCompanies { get; set; }
         //Relationship tables
         public DbSet<OrderProduct> OrderProducts { get; set; }
-        public DbSet<ProductHasDiscount> ProductHasDiscounts { get; set; }
-        public DbSet<SellerVisitClient> SellerClientVisits { get; set; }
-        public DbSet<SupplierProvidesProduct> SupplierProducts { get; set; }
+        public DbSet<ProductDiscount> ProductHasDiscounts { get; set; }
+        public DbSet<SellerClient> SellerClientVisits { get; set; }
+        public DbSet<SupplierProduct> SupplierProducts { get; set; }
     }
 }

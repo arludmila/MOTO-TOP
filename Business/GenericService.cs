@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Data.Repositories;
-using Microsoft.EntityFrameworkCore;
+﻿using Data.Repositories;
 
 namespace Business
 {

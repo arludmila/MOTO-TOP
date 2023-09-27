@@ -1,8 +1,6 @@
 ﻿using Business;
 using Contracts.DTOs.Entities;
-using Contracts.Utils;
 using Entities.Core;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.Entities

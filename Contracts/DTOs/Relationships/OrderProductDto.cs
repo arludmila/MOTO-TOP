@@ -1,12 +1,5 @@
-﻿using Contracts.DTOs.Entities;
-using Contracts.Utils;
-using Entities.Core;
+﻿using Contracts.Utils;
 using Entities.Relationships;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Contracts.DTOs.Relationships
 {

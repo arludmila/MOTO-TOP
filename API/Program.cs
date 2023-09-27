@@ -1,4 +1,3 @@
-using API.Controllers;
 using Business;
 using Data;
 using Data.Repositories;
@@ -25,13 +24,13 @@ Type[] entityTypes = new Type[]
     typeof(Seller),
     typeof(TransportCompany),
     typeof(Order),
-    typeof(ProductDiscount),
+    typeof(Discount),
     typeof(Invoice),
     typeof(BillingTransaction),
     typeof(OrderProduct),
-    typeof(ProductHasDiscount),
-    typeof(SellerVisitClient),
-    typeof(SupplierProvidesProduct),
+    typeof(ProductDiscount),
+    typeof(SellerClient),
+    typeof(SupplierProduct),
 };
 
 // Use a foreach loop to register the generic types

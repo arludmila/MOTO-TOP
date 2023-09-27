@@ -1,6 +1,5 @@
 ﻿using Business;
 using Contracts.Utils;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers

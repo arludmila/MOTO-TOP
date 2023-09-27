@@ -1,13 +1,8 @@
 ﻿using Entities.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Entities.Relationships
 {
-    public class SellerVisitClient
+    public class SellerClient
     {
         public int SellerId { get; set; }
         public int ClientId { get; set; }

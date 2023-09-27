@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Contracts.Utils
+﻿namespace Contracts.Utils
 {
     public class DtoMapper
     {
@@ -31,7 +25,7 @@ namespace Contracts.Utils
                     entityProperty.SetValue(destinationEntity, dtoValue);
                 }
             }
-            
+
         }
         public static T CreateEntityFromDto<T>(object sourceDto) where T : new()
         {
