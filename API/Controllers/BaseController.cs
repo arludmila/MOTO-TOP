@@ -24,7 +24,7 @@ namespace API.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
+                return StatusCode(500, $"Internal server error: {ex.Message} \nInner Exception: {ex.InnerException}");
             }
         }
 
