@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -186,14 +187,15 @@ namespace Data.Migrations
                     ProductId = table.Column<int>(type: "int", nullable: false),
                     ProductDiscountId = table.Column<int>(type: "int", nullable: false),
                     DateStart = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateEnd = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    DateEnd = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DiscountId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ProductHasDiscounts", x => new { x.ProductId, x.ProductDiscountId });
                     table.ForeignKey(
-                        name: "FK_ProductHasDiscounts_ProductDiscounts_ProductDiscountId",
-                        column: x => x.ProductDiscountId,
+                        name: "FK_ProductHasDiscounts_ProductDiscounts_DiscountId",
+                        column: x => x.DiscountId,
                         principalTable: "ProductDiscounts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -256,7 +258,6 @@ namespace Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    MyProperty = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PaymentMethod = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Amount = table.Column<double>(type: "float", nullable: false),
                     DocumentType = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -354,9 +355,9 @@ namespace Data.Migrations
                 column: "TransportCompanyId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductHasDiscounts_ProductDiscountId",
+                name: "IX_ProductHasDiscounts_DiscountId",
                 table: "ProductHasDiscounts",
-                column: "ProductDiscountId");
+                column: "DiscountId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_CategoryId",

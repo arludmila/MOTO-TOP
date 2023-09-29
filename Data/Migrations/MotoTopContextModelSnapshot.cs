@@ -105,6 +105,26 @@ namespace Data.Migrations
                     b.ToTable("Clients");
                 });
 
+            modelBuilder.Entity("Entities.Core.Discount", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Percentage")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ProductDiscounts");
+                });
+
             modelBuilder.Entity("Entities.Core.Invoice", b =>
                 {
                     b.Property<int>("Id")
@@ -199,26 +219,6 @@ namespace Data.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("Entities.Core.ProductDiscount", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("Percentage")
-                        .HasColumnType("float");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ProductDiscounts");
-                });
-
             modelBuilder.Entity("Entities.Core.Seller", b =>
                 {
                     b.Property<int>("Id")
@@ -277,7 +277,7 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Phone")
+                    b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -312,7 +312,7 @@ namespace Data.Migrations
                     b.ToTable("OrderProducts");
                 });
 
-            modelBuilder.Entity("Entities.Relationships.ProductHasDiscount", b =>
+            modelBuilder.Entity("Entities.Relationships.ProductDiscount", b =>
                 {
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
@@ -326,14 +326,17 @@ namespace Data.Migrations
                     b.Property<DateTime>("DateStart")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("DiscountId")
+                        .HasColumnType("int");
+
                     b.HasKey("ProductId", "ProductDiscountId");
 
-                    b.HasIndex("ProductDiscountId");
+                    b.HasIndex("DiscountId");
 
                     b.ToTable("ProductHasDiscounts");
                 });
 
-            modelBuilder.Entity("Entities.Relationships.SellerVisitClient", b =>
+            modelBuilder.Entity("Entities.Relationships.SellerClient", b =>
                 {
                     b.Property<int>("SellerId")
                         .HasColumnType("int");
@@ -351,7 +354,7 @@ namespace Data.Migrations
                     b.ToTable("SellerClientVisits");
                 });
 
-            modelBuilder.Entity("Entities.Relationships.SupplierProvidesProduct", b =>
+            modelBuilder.Entity("Entities.Relationships.SupplierProduct", b =>
                 {
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
@@ -457,11 +460,11 @@ namespace Data.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("Entities.Relationships.ProductHasDiscount", b =>
+            modelBuilder.Entity("Entities.Relationships.ProductDiscount", b =>
                 {
-                    b.HasOne("Entities.Core.ProductDiscount", "ProductDiscount")
+                    b.HasOne("Entities.Core.Discount", "Discount")
                         .WithMany()
-                        .HasForeignKey("ProductDiscountId")
+                        .HasForeignKey("DiscountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -471,12 +474,12 @@ namespace Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Product");
+                    b.Navigation("Discount");
 
-                    b.Navigation("ProductDiscount");
+                    b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("Entities.Relationships.SellerVisitClient", b =>
+            modelBuilder.Entity("Entities.Relationships.SellerClient", b =>
                 {
                     b.HasOne("Entities.Core.Client", "Client")
                         .WithMany()
@@ -495,7 +498,7 @@ namespace Data.Migrations
                     b.Navigation("Seller");
                 });
 
-            modelBuilder.Entity("Entities.Relationships.SupplierProvidesProduct", b =>
+            modelBuilder.Entity("Entities.Relationships.SupplierProduct", b =>
                 {
                     b.HasOne("Entities.Core.Product", "Product")
                         .WithMany()

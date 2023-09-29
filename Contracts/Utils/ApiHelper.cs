@@ -72,5 +72,34 @@ namespace Contracts.Utils
                 return null; // You can handle this error case as needed
             }
         }
+        public static async Task<object> GetAsync(string url)
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync(url);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // If the request was successful, read the content as a string
+                    var content = await response.Content.ReadAsStringAsync();
+
+                    // Deserialize the JSON content into a list of objects of type T
+                    object result = JsonConvert.DeserializeObject(content);
+                    return result;
+                }
+                else
+                {
+                    // Operation failed
+                    string errorMessage = "Operation failed. Status code: " + response.StatusCode;
+                    return null; // You can handle this error case as needed
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle the exception appropriately, e.g., log it or return an error message.
+                string errorMessage = "An error occurred: " + ex.Message;
+                return null; // You can handle this error case as needed
+            }
+        }
     }
 }

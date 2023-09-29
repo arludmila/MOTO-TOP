@@ -37,7 +37,7 @@ namespace DBSeeders
         public static async Task GenerateSuppliers(int quantity)
         {
             var supplierFaker = new Faker<SupplierDto>()
-                .RuleFor(x=>x.Name, f=> f.Company.CompanyName())
+                .RuleFor(x => x.Name, f => f.Company.CompanyName())
                 .RuleFor(x => x.PhoneNumber, f => f.Phone.PhoneNumberFormat(12));
             for (int i = 0; i < quantity; i++)
             {
@@ -62,7 +62,7 @@ namespace DBSeeders
         public static async Task GenerateDiscounts(int quantity)
         {
             var discountsFaker = new Faker<DiscountDto>()
-               .RuleFor(x => x.Percentage, f => f.Random.Float(0,1))
+               .RuleFor(x => x.Percentage, f => f.Random.Float(0, 1))
                .RuleFor(x => x.Description, f => f.Lorem.Sentence(50));
             for (int i = 0; i < quantity; i++)
             {
@@ -83,7 +83,7 @@ namespace DBSeeders
             var sellers = new Faker<SellerDto>()
                 .RuleFor(x => x.Name, f => f.Name.FirstName())
                 .RuleFor(x => x.LastName, f => f.Name.LastName())
-                .RuleFor(x=>x.Zone, f=> f.PickRandom(ciudadesCorrientes));
+                .RuleFor(x => x.Zone, f => f.PickRandom(ciudadesCorrientes));
             for (int i = 0; i < quantity; i++)
             {
                 var seller = sellers.Generate();
@@ -103,7 +103,7 @@ namespace DBSeeders
             var clients = new Faker<ClientDto>()
                 .RuleFor(x => x.Name, f => f.Name.FirstName())
                 .RuleFor(x => x.LastName, f => f.Name.LastName())
-                .RuleFor(x => x.Location, f => f.PickRandom(ciudadesCorrientes)+", "+f.Address.StreetAddress())
+                .RuleFor(x => x.Location, f => f.PickRandom(ciudadesCorrientes) + ", " + f.Address.StreetAddress())
                 .RuleFor(x => x.PhoneNumber, f => f.Phone.PhoneNumberFormat(12));
             for (int i = 0; i < quantity; i++)
             {
@@ -136,7 +136,7 @@ namespace DBSeeders
                 string phoneNumber = phoneNumbers[new Random().Next(phoneNumbers.Length)];
 
                 // Crear el DTO de la empresa de transporte
-                
+
                 TransportCompanyDto transportCompany = new TransportCompanyDto
                 {
                     Name = companyName,
@@ -147,9 +147,70 @@ namespace DBSeeders
                 Console.WriteLine(await ApiHelper.PostAsync("https://localhost:7215/api/TransportCompanies", transportCompany));
             }
         }
-        public static async Task GenerateSellerClients()
+        public static async Task GenerateSellerClients(int quantity)
         {
+            var sellers = await ApiHelper.GetAsync<Seller>("https://localhost:7215/api/Sellers");
+            var clients = await ApiHelper.GetAsync<Client>("https://localhost:7215/api/Clients");
+            var sellerClientsFaker = new Faker<SellerClientDto>()
+               .RuleFor(x => x.ClientId, f => f.PickRandom(clients).Id)
+               .RuleFor(x => x.SellerId, f => f.PickRandom(sellers).Id)
+               .RuleFor(x => x.Date, f => f.Date.Future());
+            for (int i = 0; i < quantity; i++)
+            {
+                var sellerClient = sellerClientsFaker.Generate();
+                Console.WriteLine(await ApiHelper.PostAsync("https://localhost:7215/api/SellerClients", sellerClient));
+            }
+        }
+        public static async Task GenerateOrders(int quantity)
+        {
+            var sellers = await ApiHelper.GetAsync<Seller>("https://localhost:7215/api/Sellers");
+            var clients = await ApiHelper.GetAsync<Client>("https://localhost:7215/api/Clients");
+            var transportCompanies = await ApiHelper.GetAsync<TransportCompany>("https://localhost:7215/api/TransportCompanies");
+            var ordersFaker = new Faker<OrderDto>()
+               .RuleFor(x => x.ClientId, f => f.PickRandom(clients).Id)
+               .RuleFor(x => x.SellerId, f => f.PickRandom(sellers).Id)
+               .RuleFor(x => x.TransportCompanyId, f => f.PickRandom(transportCompanies).Id)
+               .RuleFor(x => x.DateSent, f => f.Date.Past());
+            for (int i = 0; i < quantity; i++)
+            {
+                var order = ordersFaker.Generate();
+                order.ShipmentStatus = Entities.Enums.ShipmentStatuses.Shipped;
+                order.DateReceived = order.DateSent.AddDays(3);
+                Console.WriteLine(await ApiHelper.PostAsync("https://localhost:7215/api/orders", order));
+            }
+        }
+        public static async Task GenerateOrderProducts(int quantity)
+        {
+            var products = await ApiHelper.GetAsync<Product>("https://localhost:7215/api/Products");
+            var orders = await ApiHelper.GetAsync<Order>("https://localhost:7215/api/orders");
+            var orderProductsFaker = new Faker<OrderProductDto>()
+                .RuleFor(x => x.ProductId, f => f.PickRandom(products).Id)
+                 .RuleFor(x => x.OrderId, f => f.PickRandom(orders).Id)
+                 .RuleFor(x => x.Quantity, f => f.Random.Number(1,5))
+                 .RuleFor(x => x.Price, f => f.Random.Double(1000,50000));
+            for (int i = 0; i < quantity; i++)
+            {
+                var orderProduct = orderProductsFaker.Generate();
+                Console.WriteLine(await ApiHelper.PostAsync("https://localhost:7215/api/OrderProducts", orderProduct));
+            }
+        }
+        public static async Task GenerateInvoices()
+        {
+            var orders = await ApiHelper.GetAsync<Order>("https://localhost:7215/api/orders");
+            var invoicesFaker = new Faker<InvoiceDto>()
+                .RuleFor(x => x.Date, f => f.Date.Recent(1));
+            foreach (var order in orders)
+            {
+                var invoiceExists = (bool)await ApiHelper.GetAsync($"https://localhost:7215/api/invoices/orderHasInvoice/{order.Id}");
+                if (!invoiceExists)
+                {
+                    var invoice = invoicesFaker.Generate();
+                    invoice.OrderId = order.Id;
+                    invoice.Amount = (double)await ApiHelper.GetAsync($"https://localhost:7215/api/orders/getOrderTotal/{order.Id}");
+                    Console.WriteLine(await ApiHelper.PostAsync("https://localhost:7215/api/invoices", invoice));
 
+                }
+            }
         }
 
     }

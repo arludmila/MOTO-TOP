@@ -5,7 +5,7 @@ namespace Data.Repositories
     // T = Entity
     public class GenericRepository<T> where T : class
     {
-        private readonly MotoTopContext _context;
+        protected readonly MotoTopContext _context;
         public GenericRepository(MotoTopContext context)
         {
             _context = context;

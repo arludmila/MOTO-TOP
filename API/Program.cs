@@ -1,6 +1,8 @@
-using Business;
+using Business.Services;
+using Business.Services.Entities;
 using Data;
 using Data.Repositories;
+using Data.Repositories.Entities;
 using Entities.Core;
 using Entities.Relationships;
 
@@ -42,7 +44,12 @@ foreach (Type entityType in entityTypes)
     builder.Services.AddScoped(repositoryType);
     builder.Services.AddScoped(serviceType);
 }
+builder.Services.AddScoped<OrderRepository>();
 
+builder.Services.AddScoped<OrderService>();
+builder.Services.AddScoped<InvoiceRepository>();
+
+builder.Services.AddScoped<InvoiceService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

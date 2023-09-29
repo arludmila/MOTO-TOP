@@ -1,6 +1,6 @@
 ﻿using Data.Repositories;
 
-namespace Business
+namespace Business.Services
 {
     public class GenericService<T> where T : class
     {
