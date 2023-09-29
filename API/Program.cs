@@ -50,6 +50,9 @@ builder.Services.AddScoped<OrderService>();
 builder.Services.AddScoped<InvoiceRepository>();
 
 builder.Services.AddScoped<InvoiceService>();
+builder.Services.AddScoped<BillingTransactionRepository>();
+
+builder.Services.AddScoped<BillingTransactionService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

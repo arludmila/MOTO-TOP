@@ -12,9 +12,9 @@ namespace API.Controllers.Entities
     public class OrdersController : BaseController<Order, OrderDto>
     {
         private readonly OrderService _orderService;
-        public OrdersController(GenericService<Order> service, OrderService orderService) : base(service)
+        public OrdersController(OrderService service) : base(service)
         {
-            _orderService = orderService;
+            _orderService = service;
         }
         [HttpGet("getOrderTotal/{orderId}")]
         public async Task<double> GetOrderTotal(int orderId)

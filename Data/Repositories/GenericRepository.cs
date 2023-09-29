@@ -12,7 +12,7 @@ namespace Data.Repositories
         }
 
         // Create operation (Async)
-        public async Task<T> CreateAsync(T entity)
+        public virtual async Task<T> CreateAsync(T entity)
         {
             _context.Set<T>().Add(entity);
             await _context.SaveChangesAsync();

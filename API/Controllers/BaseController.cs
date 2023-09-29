@@ -15,7 +15,7 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAsync([FromBody] TDto dto)
+        public virtual async Task<IActionResult> CreateAsync([FromBody] TDto dto)
         {
             try
             {

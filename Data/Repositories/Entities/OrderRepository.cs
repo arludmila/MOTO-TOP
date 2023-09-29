@@ -8,12 +8,11 @@ using System.Threading.Tasks;
 
 namespace Data.Repositories.Entities
 {
-    public class OrderRepository
+    public class OrderRepository : GenericRepository<Order>
     {
-        private readonly MotoTopContext _context;
-        public OrderRepository(MotoTopContext context)
+        public OrderRepository(MotoTopContext context) : base(context)
         {
-            _context = context;
+
         }
         public async Task<double> GetOrderTotalAsync(int id)
         {

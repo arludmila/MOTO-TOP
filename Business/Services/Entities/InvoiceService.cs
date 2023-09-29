@@ -1,4 +1,5 @@
 ﻿using Data;
+using Data.Repositories;
 using Data.Repositories.Entities;
 using Entities.Core;
 using Microsoft.EntityFrameworkCore;
@@ -12,16 +13,19 @@ namespace Business.Services.Entities
 {
     public class InvoiceService : GenericService<Invoice>
     {
-        private readonly InvoiceRepository _repository;
+        private readonly InvoiceRepository _invoiceRepository;
 
         public InvoiceService(InvoiceRepository repository) : base(repository)
         {
-            _repository = repository;
+            _invoiceRepository = repository;
         }
-
+        public override async Task<Invoice> CreateAsync(Invoice invoice)
+        {
+            return await _invoiceRepository.CreateAsync(invoice);
+        }
         public async Task<bool> OrderHasInvoiceAsync(int orderId)
         {
-            return await _repository.OrderHasInvoiceAsync(orderId);
+            return await _invoiceRepository.OrderHasInvoiceAsync(orderId);
         }
     }
 }

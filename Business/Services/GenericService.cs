@@ -12,7 +12,7 @@ namespace Business.Services
         }
 
         // Create operation (Async)
-        public async Task<T> CreateAsync(T entity)
+        public virtual async Task<T> CreateAsync(T entity)
         {
             return await _repository.CreateAsync(entity);
         }

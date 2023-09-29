@@ -1,23 +1,21 @@
-﻿using Data.Repositories.Entities;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Data.Repositories;
+using Data.Repositories.Entities;
+using Entities.Core;
 
 namespace Business.Services.Entities
 {
-    public class OrderService
+    public class OrderService : GenericService<Order>
     {
-        private readonly OrderRepository _repository;
-        public OrderService(OrderRepository repository)
+        private readonly OrderRepository _orderRepository;
+
+        public OrderService(OrderRepository repository) : base(repository)
         {
-            _repository = repository;
+            _orderRepository = repository;
         }
+
         public async Task<double> GetOrderTotalAsync(int id)
         {
-            return await _repository.GetOrderTotalAsync(id);
+            return await _orderRepository.GetOrderTotalAsync(id);
         }
     }
 }
