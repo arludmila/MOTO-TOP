@@ -9,13 +9,15 @@ namespace DBSeeders
 {
     public static class Generators
     {
-        public static async Task GenerateCategories(int quantity)
+        public static async Task GenerateCategories()
         {
-            var categoryFaker = new Faker<CategoryDto>()
-            .RuleFor(x => x.Name, f => f.Vehicle.Manufacturer() + " Parts");
-            for (int i = 0; i < quantity; i++)
+            string[] motorcycleParts = { "Motor", "Neumáticos", "Frenos", "Suspensión", "Escape", "Transmisión", "Faros", "Cadena", "Carburador", "Batería", "Manillar", "Asiento", "Rueda delantera", "Rueda trasera", "Amortiguadores", "Refrigeración", "Embrague", "Encendido", "Filtro de aire", "Carenado" };
+            for (int i = 0; i < motorcycleParts.Count(); i++)
             {
-                var category = categoryFaker.Generate();
+                var category = new CategoryDto
+                {
+                    Name = motorcycleParts[i],
+                };
                 Console.WriteLine(await ApiHelper.PostAsync("https://localhost:7215/api/Categories", category));
             }
         }
@@ -23,7 +25,7 @@ namespace DBSeeders
         {
             var categories = await ApiHelper.GetAsync<Category>("https://localhost:7215/api/Categories");
             var productFaker = new Faker<ProductDto>()
-            .RuleFor(x => x.Name, f => f.Commerce.Product())
+            .RuleFor(x => x.Name, f => f.Vehicle.Manufacturer())
             .RuleFor(x => x.Quantity, f => f.Random.Number(20, 100))
             .RuleFor(x => x.Price, f => f.Random.Double(1000, 50000))
             .RuleFor(x => x.CategoryId, f => f.PickRandom(categories).Id)
@@ -38,7 +40,7 @@ namespace DBSeeders
         {
             var supplierFaker = new Faker<SupplierDto>()
                 .RuleFor(x => x.Name, f => f.Company.CompanyName())
-                .RuleFor(x => x.PhoneNumber, f => f.Phone.PhoneNumberFormat(12));
+                .RuleFor(x => x.PhoneNumber, f => f.Phone.PhoneNumberFormat());
             for (int i = 0; i < quantity; i++)
             {
                 var supplier = supplierFaker.Generate();
@@ -62,7 +64,7 @@ namespace DBSeeders
         public static async Task GenerateDiscounts(int quantity)
         {
             var discountsFaker = new Faker<DiscountDto>()
-               .RuleFor(x => x.Percentage, f => f.Random.Float(0, 1))
+               .RuleFor(x => x.Percentage, f => f.Random.Float(0, 0.5f))
                .RuleFor(x => x.Description, f => f.Lorem.Sentence(50));
             for (int i = 0; i < quantity; i++)
             {
@@ -206,7 +208,7 @@ namespace DBSeeders
                 {
                     var invoice = invoicesFaker.Generate();
                     invoice.OrderId = order.Id;
-                    invoice.Amount = (double)await ApiHelper.GetAsync($"https://localhost:7215/api/orders/getOrderTotal/{order.Id}");
+                    invoice.Amount = Convert.ToDouble(await ApiHelper.GetAsync($"https://localhost:7215/api/orders/getOrderTotal/{order.Id}"));
                     Console.WriteLine(await ApiHelper.PostAsync("https://localhost:7215/api/invoices", invoice));
 
                 }

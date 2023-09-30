@@ -1,5 +1,6 @@
 ﻿using Contracts.DTOs.Entities;
 using Entities.Core;
+using Entities.Relationships;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics.SymbolStore;
 
@@ -13,13 +14,23 @@ namespace Data.Repositories.Entities
         }
         public override async Task<Invoice> CreateAsync(Invoice invoice)
         {
-            var order = await _context.Set<Order>().FirstOrDefaultAsync(x=> x.Id == invoice.OrderId);
 
             
             _context.Set<Invoice>().Add(invoice);
             await _context.SaveChangesAsync();
 
-            var generatedInvoiceId = invoice.Id;
+            await CreateBTAsync(invoice);
+            await SetOrderProductsIdsAsync(invoice);
+            return invoice;
+        }
+        public async Task<bool> OrderHasInvoiceAsync(int orderId)
+        {
+            return await _context.Set<Invoice>().AnyAsync(x => x.OrderId == orderId);
+        }
+        private async Task CreateBTAsync(Invoice invoice)
+        {
+            var order = await _context.Set<Order>().FirstOrDefaultAsync(x => x.Id == invoice.OrderId);
+
             var billingTransaction = new BillingTransaction()
             {
                 Amount = invoice.Amount,
@@ -30,11 +41,16 @@ namespace Data.Repositories.Entities
             };
             _context.Set<BillingTransaction>().Add(billingTransaction);
             await _context.SaveChangesAsync();
-            return invoice;
         }
-        public async Task<bool> OrderHasInvoiceAsync(int orderId)
+        private async Task SetOrderProductsIdsAsync(Invoice invoice)
         {
-            return await _context.Set<Invoice>().AnyAsync(x => x.OrderId == orderId);
+            var orderProducts = await _context.Set<OrderProduct>()
+                .Where(x => x.OrderId == invoice.OrderId).ToListAsync();
+            foreach (var item in orderProducts)
+            {
+                item.InvoiceId = invoice.Id;
+            }
+            await _context.SaveChangesAsync();
         }
     }
 }
