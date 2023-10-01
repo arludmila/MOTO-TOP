@@ -1,4 +1,5 @@
 ﻿using Entities.Core;
+using Entities.Enums;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,11 @@ namespace Data.Repositories.Entities
             }
 
             return total;
+        }
+        public async Task<ShipmentStatuses> GetOrderStatusAsync(int id)
+        {
+            var order = await _context.Orders.FirstOrDefaultAsync(x => x.Id == id);
+            return order.ShipmentStatus;
         }
     }
 }

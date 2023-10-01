@@ -1,6 +1,8 @@
 ﻿using Data.Repositories;
 using Data.Repositories.Entities;
 using Entities.Core;
+using Entities.Enums;
+using Microsoft.EntityFrameworkCore;
 
 namespace Business.Services.Entities
 {
@@ -16,6 +18,10 @@ namespace Business.Services.Entities
         public async Task<double> GetOrderTotalAsync(int id)
         {
             return await _orderRepository.GetOrderTotalAsync(id);
+        }
+        public async Task<ShipmentStatuses> GetOrderStatusAsync(int id)
+        {
+            return await _orderRepository.GetOrderStatusAsync(id);
         }
     }
 }

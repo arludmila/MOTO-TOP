@@ -1,5 +1,4 @@
-﻿using Business.Services;
-using Business.Services.Entities;
+﻿using Business.Services.Entities;
 using Contracts.DTOs.Entities;
 using Entities.Core;
 using Microsoft.AspNetCore.Mvc;
@@ -20,6 +19,11 @@ namespace API.Controllers.Entities
         public async Task<double> GetOrderTotal(int orderId)
         {
             return await _orderService.GetOrderTotalAsync(orderId);
+        }
+        [HttpGet("getOrderStatus/{orderId}")]
+        public async Task<string> GetOrderStatus(int orderId)
+        {
+            return (await _orderService.GetOrderStatusAsync(orderId)).ToString();
         }
     }
 }

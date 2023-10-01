@@ -51,6 +51,7 @@ namespace Data.Repositories.Entities
                 item.InvoiceId = invoice.Id;
             }
             await _context.SaveChangesAsync();
+            
         }
     }
 }
