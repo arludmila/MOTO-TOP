@@ -30,7 +30,7 @@ namespace API.Controllers.Entities
             }
         }
         [HttpGet("orderHasInvoice/{orderId}")]
-        public async Task<bool> GetOrderTotal(int orderId)
+        public async Task<bool> OrderHasInvoice(int orderId)
         {
             return await _invoiceService.OrderHasInvoiceAsync(orderId);
         }

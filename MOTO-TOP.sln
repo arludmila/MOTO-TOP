@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Business", "Business\Busine
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{A9AB86C4-2A31-4720-AE6D-0106616B98AA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBSeeders", "DBSeeders\DBSeeders.csproj", "{02EFF374-B589-4ADC-A080-7C8C4476D5CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DBSeeders", "DBSeeders\DBSeeders.csproj", "{02EFF374-B589-4ADC-A080-7C8C4476D5CA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinFormsApp", "WinFormsApp\WinFormsApp.csproj", "{99602C19-D63A-4918-B5C9-2D5A3D15F75C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{02EFF374-B589-4ADC-A080-7C8C4476D5CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{02EFF374-B589-4ADC-A080-7C8C4476D5CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{02EFF374-B589-4ADC-A080-7C8C4476D5CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99602C19-D63A-4918-B5C9-2D5A3D15F75C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99602C19-D63A-4918-B5C9-2D5A3D15F75C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99602C19-D63A-4918-B5C9-2D5A3D15F75C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99602C19-D63A-4918-B5C9-2D5A3D15F75C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
