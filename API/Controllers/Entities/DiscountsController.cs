@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.Entities
 {
-    [Route("api/[controller]")]
+    [Route("api/discounts")]
     [ApiController]
     public class DiscountsController : BaseController<Discount, DiscountDto>
     {

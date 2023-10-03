@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.Entities
 {
-    [Route("api/[controller]")]
+    [Route("api/billing-transactions")]
     [ApiController]
     public class BillingTransactionsController : BaseController<BillingTransaction, BillingTransactionDto>
     {
@@ -16,7 +16,7 @@ namespace API.Controllers.Entities
             _btService = service;
         }
         [HttpGet("getClientBalance/{clientId}")]
-        public async Task<double> GetOrderTotal(int clientId)
+        public async Task<double> GetClientBalance(int clientId)
         {
             return await _btService.GetClientBalanceAsync(clientId);
         }

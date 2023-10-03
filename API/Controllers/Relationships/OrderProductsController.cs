@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.Relationships
 {
-    [Route("api/[controller]")]
+    [Route("api/order-products")]
     [ApiController]
     public class OrderProductsController : BaseController<OrderProduct, OrderProductDto>
     {

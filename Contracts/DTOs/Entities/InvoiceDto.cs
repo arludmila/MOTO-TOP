@@ -7,7 +7,8 @@ namespace Contracts.DTOs.Entities
     {
         public DateTime Date { get; set; }
         public double Amount { get; set; }
-        public int OrderId { get; set; }
+        public int? OrderId { get; set; }
+        public int? OfficeWorkerId { get; set; }
         public static Invoice Convert(InvoiceDto dto)
         {
             return DtoMapper.CreateEntityFromDto<Invoice>(dto);

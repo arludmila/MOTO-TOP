@@ -2,10 +2,8 @@
 {
     public class Seller : EntityBase
     {
-        public string Name { get; set; }
-        public string LastName { get; set; }
         public string Zone { get; set; }
-
-
+        public int UserId { get; set; }
+        public User User { get; set; }
     }
 }

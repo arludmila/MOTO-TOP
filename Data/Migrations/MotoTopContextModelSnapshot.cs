@@ -84,15 +84,15 @@ namespace Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Location")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -139,14 +139,37 @@ namespace Data.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("OrderId")
+                    b.Property<int?>("OfficeWorkerId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("OrderId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("OfficeWorkerId");
+
                     b.HasIndex("OrderId");
 
                     b.ToTable("Invoices");
+                });
+
+            modelBuilder.Entity("Entities.Core.OfficeWorker", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("OfficeWorker");
                 });
 
             modelBuilder.Entity("Entities.Core.Order", b =>
@@ -166,6 +189,9 @@ namespace Data.Migrations
                     b.Property<DateTime>("DateSent")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("HasInvoice")
+                        .HasColumnType("bit");
+
                     b.Property<int>("SellerId")
                         .HasColumnType("int");
 
@@ -173,7 +199,7 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TransportCompanyId")
+                    b.Property<int>("TransportCompanyId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -227,19 +253,16 @@ namespace Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Zone")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Sellers");
                 });
@@ -286,12 +309,52 @@ namespace Data.Migrations
                     b.ToTable("TransportCompanies");
                 });
 
+            modelBuilder.Entity("Entities.Core.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("DocumentNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DocumentType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("User");
+                });
+
             modelBuilder.Entity("Entities.Relationships.OrderProduct", b =>
                 {
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.Property<int>("OrderId")
+                    b.Property<int?>("OrderId")
                         .HasColumnType("int");
 
                     b.Property<int?>("InvoiceId")
@@ -362,6 +425,12 @@ namespace Data.Migrations
                     b.Property<int>("SupplierId")
                         .HasColumnType("int");
 
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
                     b.HasKey("ProductId", "SupplierId");
 
                     b.HasIndex("SupplierId");
@@ -390,13 +459,28 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Entities.Core.Invoice", b =>
                 {
+                    b.HasOne("Entities.Core.OfficeWorker", "OfficeWorker")
+                        .WithMany()
+                        .HasForeignKey("OfficeWorkerId");
+
                     b.HasOne("Entities.Core.Order", "Order")
                         .WithMany()
-                        .HasForeignKey("OrderId")
+                        .HasForeignKey("OrderId");
+
+                    b.Navigation("OfficeWorker");
+
+                    b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("Entities.Core.OfficeWorker", b =>
+                {
+                    b.HasOne("Entities.Core.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Order");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Entities.Core.Order", b =>
@@ -415,7 +499,9 @@ namespace Data.Migrations
 
                     b.HasOne("Entities.Core.TransportCompany", "TransportCompany")
                         .WithMany()
-                        .HasForeignKey("TransportCompanyId");
+                        .HasForeignKey("TransportCompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Client");
 
@@ -433,6 +519,17 @@ namespace Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("Entities.Core.Seller", b =>
+                {
+                    b.HasOne("Entities.Core.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Entities.Relationships.OrderProduct", b =>

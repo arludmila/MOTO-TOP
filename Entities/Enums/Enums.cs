@@ -14,4 +14,9 @@
         BankTransfer,
         Check
     }
+    public enum Roles
+    {
+        OfficeWorker,
+        Seller
+    }
 }

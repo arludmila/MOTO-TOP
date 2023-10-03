@@ -9,7 +9,8 @@ namespace Contracts.DTOs.Entities
         public DateTime DateReceived { get; set; }
         public int ClientId { get; set; }
         public int SellerId { get; set; }
-        public int? TransportCompanyId { get; set; }
+        public int TransportCompanyId { get; set; }
+        public bool HasInvoice { get; set; }
 
     }
 }

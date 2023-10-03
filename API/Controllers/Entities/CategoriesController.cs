@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Controllers.Entities
 {
     //TODO: arreglar los PUT para que acepten el id y el dto en vez de la entidad...
-    [Route("api/[controller]")]
+    [Route("api/categories")]
     [ApiController]
     public class CategoriesController : BaseController<Category, CategoryDto>
     {
