@@ -39,6 +39,7 @@ namespace WinFormsApp
                 CategoryId = categoryId,
             };
             await ApiHelper.PostAsync("https://localhost:7215/api/products", product);
+            this.Close();
         }
 
         private async void CreateProduct_Load(object sender, EventArgs e)

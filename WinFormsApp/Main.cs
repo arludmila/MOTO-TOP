@@ -1,5 +1,6 @@
 using Contracts.DTOs.Entities;
 using Contracts.Utils;
+using Contracts.ViewModels;
 using Entities.Core;
 using ReaLTaiizor.Controls;
 using System.ComponentModel;
@@ -10,6 +11,7 @@ namespace WinFormsApp
     public partial class Main : Form
     {
         List<Category> categories;
+        List<ProductViewModel> products;
         public Main()
         {
             InitializeComponent();
@@ -59,7 +61,12 @@ namespace WinFormsApp
             dataGridViewCategories.Columns["Name"].DisplayIndex = 1;
             dataGridViewCategories.Columns["Name"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dataGridViewCategories.RowHeadersVisible = false;
-
+            // PRODUCTS
+            dataGridViewProducts.RowHeadersVisible = false;
+            foreach (DataGridViewColumn column in dataGridViewProducts.Columns)
+            {
+                column.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            }
         }
         private async Task LoadData()
         {
@@ -68,12 +75,18 @@ namespace WinFormsApp
             {
                 dataGridViewCategories.DataSource = new BindingList<Category>(categories);
             }
+            products = await ApiHelper.GetAsync<ProductViewModel>("https://localhost:7215/api/products/view-models");
+            if (products != null)
+            {
+                dataGridViewProducts.DataSource = new BindingList<ProductViewModel>(products);
+            }
         }
 
-        private void buttonCreateProduct_Click(object sender, EventArgs e)
+        private async void buttonCreateProduct_Click(object sender, EventArgs e)
         {
             var form = new CreateProduct();
             form.ShowDialog();
+            await LoadData();
         }
     }
 }

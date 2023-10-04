@@ -43,6 +43,7 @@
             labelOrdersSearch = new ReaLTaiizor.Controls.DungeonLabel();
             txtBoxOrdersSearch = new ReaLTaiizor.Controls.DungeonTextBox();
             tabPageCategories = new TabPage();
+            metroDivider1 = new ReaLTaiizor.Controls.MetroDivider();
             buttonCreateCategory = new ReaLTaiizor.Controls.Button();
             txtBoxCategoryName = new ReaLTaiizor.Controls.DungeonTextBox();
             labelCategoryName = new ReaLTaiizor.Controls.DungeonLabel();
@@ -58,6 +59,7 @@
             tabPageBillingTransactions = new TabPage();
             tabPageInvoices = new TabPage();
             tabPageReports = new TabPage();
+            tabPageClients = new TabPage();
             hopeTabPage.SuspendLayout();
             tabPageOrders.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewOrders).BeginInit();
@@ -77,6 +79,7 @@
             hopeTabPage.Controls.Add(tabPageBillingTransactions);
             hopeTabPage.Controls.Add(tabPageInvoices);
             hopeTabPage.Controls.Add(tabPageReports);
+            hopeTabPage.Controls.Add(tabPageClients);
             hopeTabPage.Dock = DockStyle.Fill;
             hopeTabPage.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
             hopeTabPage.ForeColorA = Color.WhiteSmoke;
@@ -86,7 +89,7 @@
             hopeTabPage.Location = new Point(0, 0);
             hopeTabPage.Name = "hopeTabPage";
             hopeTabPage.SelectedIndex = 0;
-            hopeTabPage.Size = new Size(916, 493);
+            hopeTabPage.Size = new Size(995, 575);
             hopeTabPage.SizeMode = TabSizeMode.Fixed;
             hopeTabPage.TabIndex = 0;
             hopeTabPage.ThemeColorA = Color.FromArgb(64, 158, 255);
@@ -101,7 +104,7 @@
             tabPageOrders.Location = new Point(0, 40);
             tabPageOrders.Name = "tabPageOrders";
             tabPageOrders.Padding = new Padding(3);
-            tabPageOrders.Size = new Size(916, 453);
+            tabPageOrders.Size = new Size(995, 535);
             tabPageOrders.TabIndex = 0;
             tabPageOrders.Text = "Pedidos";
             tabPageOrders.UseVisualStyleBackColor = true;
@@ -147,7 +150,7 @@
             dataGridViewOrders.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewOrders.RowTemplate.Height = 25;
             dataGridViewOrders.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridViewOrders.Size = new Size(898, 384);
+            dataGridViewOrders.Size = new Size(983, 472);
             dataGridViewOrders.TabIndex = 2;
             // 
             // labelOrdersSearch
@@ -156,7 +159,7 @@
             labelOrdersSearch.BackColor = Color.Transparent;
             labelOrdersSearch.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
             labelOrdersSearch.ForeColor = Color.FromArgb(76, 76, 77);
-            labelOrdersSearch.Location = new Point(89, 23);
+            labelOrdersSearch.Location = new Point(150, 23);
             labelOrdersSearch.Name = "labelOrdersSearch";
             labelOrdersSearch.Size = new Size(72, 25);
             labelOrdersSearch.TabIndex = 1;
@@ -169,7 +172,7 @@
             txtBoxOrdersSearch.EdgeColor = Color.White;
             txtBoxOrdersSearch.Font = new Font("Tahoma", 11F, FontStyle.Regular, GraphicsUnit.Point);
             txtBoxOrdersSearch.ForeColor = Color.DimGray;
-            txtBoxOrdersSearch.Location = new Point(167, 23);
+            txtBoxOrdersSearch.Location = new Point(228, 23);
             txtBoxOrdersSearch.MaxLength = 32767;
             txtBoxOrdersSearch.Multiline = false;
             txtBoxOrdersSearch.Name = "txtBoxOrdersSearch";
@@ -181,6 +184,7 @@
             // 
             // tabPageCategories
             // 
+            tabPageCategories.Controls.Add(metroDivider1);
             tabPageCategories.Controls.Add(buttonCreateCategory);
             tabPageCategories.Controls.Add(txtBoxCategoryName);
             tabPageCategories.Controls.Add(labelCategoryName);
@@ -190,10 +194,26 @@
             tabPageCategories.Location = new Point(0, 40);
             tabPageCategories.Name = "tabPageCategories";
             tabPageCategories.Padding = new Padding(3);
-            tabPageCategories.Size = new Size(916, 453);
+            tabPageCategories.Size = new Size(995, 535);
             tabPageCategories.TabIndex = 1;
             tabPageCategories.Text = "Rubros";
             tabPageCategories.UseVisualStyleBackColor = true;
+            // 
+            // metroDivider1
+            // 
+            metroDivider1.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            metroDivider1.IsDerivedStyle = true;
+            metroDivider1.Location = new Point(0, 476);
+            metroDivider1.Name = "metroDivider1";
+            metroDivider1.Orientation = ReaLTaiizor.Enum.Metro.DividerStyle.Horizontal;
+            metroDivider1.Size = new Size(995, 4);
+            metroDivider1.Style = ReaLTaiizor.Enum.Metro.Style.Light;
+            metroDivider1.StyleManager = null;
+            metroDivider1.TabIndex = 9;
+            metroDivider1.Text = "metroDivider1";
+            metroDivider1.ThemeAuthor = "Taiizor";
+            metroDivider1.ThemeName = "MetroLight";
+            metroDivider1.Thickness = 1;
             // 
             // buttonCreateCategory
             // 
@@ -205,7 +225,7 @@
             buttonCreateCategory.Image = null;
             buttonCreateCategory.ImageAlign = ContentAlignment.MiddleLeft;
             buttonCreateCategory.InactiveColor = Color.FromArgb(32, 34, 37);
-            buttonCreateCategory.Location = new Point(769, 416);
+            buttonCreateCategory.Location = new Point(815, 495);
             buttonCreateCategory.Name = "buttonCreateCategory";
             buttonCreateCategory.PressedBorderColor = Color.FromArgb(165, 37, 37);
             buttonCreateCategory.PressedColor = Color.FromArgb(165, 37, 37);
@@ -222,7 +242,7 @@
             txtBoxCategoryName.EdgeColor = Color.White;
             txtBoxCategoryName.Font = new Font("Tahoma", 11F, FontStyle.Regular, GraphicsUnit.Point);
             txtBoxCategoryName.ForeColor = Color.DimGray;
-            txtBoxCategoryName.Location = new Point(186, 416);
+            txtBoxCategoryName.Location = new Point(232, 495);
             txtBoxCategoryName.MaxLength = 32767;
             txtBoxCategoryName.Multiline = false;
             txtBoxCategoryName.Name = "txtBoxCategoryName";
@@ -238,7 +258,7 @@
             labelCategoryName.BackColor = Color.Transparent;
             labelCategoryName.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
             labelCategoryName.ForeColor = Color.FromArgb(76, 76, 77);
-            labelCategoryName.Location = new Point(12, 416);
+            labelCategoryName.Location = new Point(58, 495);
             labelCategoryName.Name = "labelCategoryName";
             labelCategoryName.Size = new Size(177, 25);
             labelCategoryName.TabIndex = 4;
@@ -285,7 +305,7 @@
             dataGridViewCategories.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCategories.RowTemplate.Height = 25;
             dataGridViewCategories.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridViewCategories.Size = new Size(904, 341);
+            dataGridViewCategories.Size = new Size(983, 407);
             dataGridViewCategories.TabIndex = 3;
             // 
             // labelSearchCategories
@@ -294,7 +314,7 @@
             labelSearchCategories.BackColor = Color.Transparent;
             labelSearchCategories.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
             labelSearchCategories.ForeColor = Color.FromArgb(76, 76, 77);
-            labelSearchCategories.Location = new Point(96, 22);
+            labelSearchCategories.Location = new Point(163, 20);
             labelSearchCategories.Name = "labelSearchCategories";
             labelSearchCategories.Size = new Size(72, 25);
             labelSearchCategories.TabIndex = 2;
@@ -307,7 +327,7 @@
             txtBoxSearchCategories.EdgeColor = Color.White;
             txtBoxSearchCategories.Font = new Font("Tahoma", 11F, FontStyle.Regular, GraphicsUnit.Point);
             txtBoxSearchCategories.ForeColor = Color.DimGray;
-            txtBoxSearchCategories.Location = new Point(174, 19);
+            txtBoxSearchCategories.Location = new Point(241, 17);
             txtBoxSearchCategories.MaxLength = 32767;
             txtBoxSearchCategories.Multiline = false;
             txtBoxSearchCategories.Name = "txtBoxSearchCategories";
@@ -325,7 +345,7 @@
             tabPageProducts.Controls.Add(txtBoxProductsSearch);
             tabPageProducts.Location = new Point(0, 40);
             tabPageProducts.Name = "tabPageProducts";
-            tabPageProducts.Size = new Size(916, 453);
+            tabPageProducts.Size = new Size(995, 535);
             tabPageProducts.TabIndex = 2;
             tabPageProducts.Text = "Productos";
             tabPageProducts.UseVisualStyleBackColor = true;
@@ -340,7 +360,7 @@
             buttonCreateProduct.Image = null;
             buttonCreateProduct.ImageAlign = ContentAlignment.MiddleLeft;
             buttonCreateProduct.InactiveColor = Color.FromArgb(32, 34, 37);
-            buttonCreateProduct.Location = new Point(9, 407);
+            buttonCreateProduct.Location = new Point(12, 488);
             buttonCreateProduct.Name = "buttonCreateProduct";
             buttonCreateProduct.PressedBorderColor = Color.FromArgb(165, 37, 37);
             buttonCreateProduct.PressedColor = Color.FromArgb(165, 37, 37);
@@ -391,7 +411,7 @@
             dataGridViewProducts.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewProducts.RowTemplate.Height = 25;
             dataGridViewProducts.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridViewProducts.Size = new Size(898, 349);
+            dataGridViewProducts.Size = new Size(974, 430);
             dataGridViewProducts.TabIndex = 4;
             // 
             // labelProductsSearch
@@ -400,7 +420,7 @@
             labelProductsSearch.BackColor = Color.Transparent;
             labelProductsSearch.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
             labelProductsSearch.ForeColor = Color.FromArgb(76, 76, 77);
-            labelProductsSearch.Location = new Point(131, 16);
+            labelProductsSearch.Location = new Point(181, 14);
             labelProductsSearch.Name = "labelProductsSearch";
             labelProductsSearch.Size = new Size(72, 25);
             labelProductsSearch.TabIndex = 3;
@@ -413,7 +433,7 @@
             txtBoxProductsSearch.EdgeColor = Color.White;
             txtBoxProductsSearch.Font = new Font("Tahoma", 11F, FontStyle.Regular, GraphicsUnit.Point);
             txtBoxProductsSearch.ForeColor = Color.DimGray;
-            txtBoxProductsSearch.Location = new Point(209, 16);
+            txtBoxProductsSearch.Location = new Point(259, 14);
             txtBoxProductsSearch.MaxLength = 32767;
             txtBoxProductsSearch.Multiline = false;
             txtBoxProductsSearch.Name = "txtBoxProductsSearch";
@@ -427,7 +447,7 @@
             // 
             tabPageSuppliers.Location = new Point(0, 40);
             tabPageSuppliers.Name = "tabPageSuppliers";
-            tabPageSuppliers.Size = new Size(916, 453);
+            tabPageSuppliers.Size = new Size(995, 535);
             tabPageSuppliers.TabIndex = 3;
             tabPageSuppliers.Text = "Proveedores";
             tabPageSuppliers.UseVisualStyleBackColor = true;
@@ -436,7 +456,7 @@
             // 
             tabPageBillingTransactions.Location = new Point(0, 40);
             tabPageBillingTransactions.Name = "tabPageBillingTransactions";
-            tabPageBillingTransactions.Size = new Size(916, 453);
+            tabPageBillingTransactions.Size = new Size(995, 535);
             tabPageBillingTransactions.TabIndex = 4;
             tabPageBillingTransactions.Text = "Cobranzas";
             tabPageBillingTransactions.UseVisualStyleBackColor = true;
@@ -445,7 +465,7 @@
             // 
             tabPageInvoices.Location = new Point(0, 40);
             tabPageInvoices.Name = "tabPageInvoices";
-            tabPageInvoices.Size = new Size(916, 453);
+            tabPageInvoices.Size = new Size(995, 535);
             tabPageInvoices.TabIndex = 5;
             tabPageInvoices.Text = "Facturas";
             tabPageInvoices.UseVisualStyleBackColor = true;
@@ -454,16 +474,25 @@
             // 
             tabPageReports.Location = new Point(0, 40);
             tabPageReports.Name = "tabPageReports";
-            tabPageReports.Size = new Size(916, 453);
+            tabPageReports.Size = new Size(995, 535);
             tabPageReports.TabIndex = 6;
             tabPageReports.Text = "Informes";
             tabPageReports.UseVisualStyleBackColor = true;
+            // 
+            // tabPageClients
+            // 
+            tabPageClients.Location = new Point(0, 40);
+            tabPageClients.Name = "tabPageClients";
+            tabPageClients.Size = new Size(995, 535);
+            tabPageClients.TabIndex = 7;
+            tabPageClients.Text = "Clientes";
+            tabPageClients.UseVisualStyleBackColor = true;
             // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(916, 493);
+            ClientSize = new Size(995, 575);
             Controls.Add(hopeTabPage);
             Name = "Main";
             Text = "Form1";
@@ -504,5 +533,7 @@
         private ReaLTaiizor.Controls.PoisonDataGridView dataGridViewProducts;
         private ReaLTaiizor.Controls.DungeonLabel labelProductsSearch;
         private ReaLTaiizor.Controls.DungeonTextBox txtBoxProductsSearch;
+        private ReaLTaiizor.Controls.MetroDivider metroDivider1;
+        private TabPage tabPageClients;
     }
 }
