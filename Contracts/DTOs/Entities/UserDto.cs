@@ -13,8 +13,6 @@ namespace Contracts.DTOs.Entities
         public string LastName { get; set; }
         public string Email { get; set; }
         public string PasswordHash { get; set; }
-        public string DocumentType { get; set; }
-        public string DocumentNumber { get; set; }
         public Roles Role { get; set; }
 
     }

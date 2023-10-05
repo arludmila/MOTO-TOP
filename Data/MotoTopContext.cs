@@ -17,7 +17,7 @@ namespace Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
 
-            optionsBuilder.UseSqlServer("Server=LUDMILA\\SQLEXPRESS;Database=mototop;Trusted_Connection=True;MultipleActiveResultSets=True;TrustServerCertificate=True");
+            optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=mototop;Trusted_Connection=True;MultipleActiveResultSets=True;TrustServerCertificate=True");
 
 
         }
@@ -42,6 +42,10 @@ namespace Data
                 .Entity<BillingTransaction>()
                 .Property(d => d.PaymentMethod)
                 .HasConversion(new EnumToStringConverter<PaymentMethods>());
+            modelBuilder
+                .Entity<User>()
+                .Property(u => u.Role)
+                .HasConversion(new EnumToStringConverter<Roles>());
         }
         // Entities tables
         public DbSet<BillingTransaction> BillingTransactions { get; set; }
