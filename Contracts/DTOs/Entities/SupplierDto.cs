@@ -7,9 +7,6 @@ namespace Contracts.DTOs.Entities
     {
         public string Name { get; set; }
         public string PhoneNumber { get; set; }
-        public static Supplier Convert(SupplierDto dto)
-        {
-            return DtoMapper.CreateEntityFromDto<Supplier>(dto);
-        }
+       
     }
 }
