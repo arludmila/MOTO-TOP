@@ -25,9 +25,7 @@ namespace Contracts.Utils
                 var response = await _httpClient.PostAsync(url, content);
                 if (response.IsSuccessStatusCode)
                 {
-                    // Operation was successful
-                    string successMessage = "Operation successful!";
-                    return successMessage;
+                    return await response.Content.ReadAsStringAsync();
                 }
                 else
                 {

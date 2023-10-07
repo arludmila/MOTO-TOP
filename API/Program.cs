@@ -54,6 +54,10 @@ builder.Services.AddScoped<BillingTransactionRepository>();
 builder.Services.AddScoped<BillingTransactionService>();
 builder.Services.AddScoped<ProductRepository>();
 builder.Services.AddScoped<ProductService>();
+builder.Services.AddScoped<UserRepository>();
+builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<SellerRepository>();
+builder.Services.AddScoped<SellerService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
