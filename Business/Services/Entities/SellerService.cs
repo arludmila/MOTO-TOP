@@ -1,4 +1,5 @@
-﻿using Data.Repositories.Entities;
+﻿using Contracts.ViewModels;
+using Data.Repositories.Entities;
 using Entities.Core;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,10 @@ namespace Business.Services.Entities
         public SellerService(SellerRepository repository) : base(repository)
         {
             _sellerRepository = repository;
+        }
+        public async Task<List<SellerViewModel>> GetAllAsync()
+        {
+            return await _sellerRepository.GetAllAsync();
         }
     }
 }

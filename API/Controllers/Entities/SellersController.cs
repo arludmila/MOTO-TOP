@@ -1,7 +1,9 @@
 ﻿using Azure;
 using Business.Services;
+using Business.Services.Entities;
 using Contracts.DTOs.Entities;
 using Contracts.Utils;
+using Contracts.ViewModels;
 using Entities.Core;
 using Entities.Enums;
 using Microsoft.AspNetCore.Identity;
@@ -14,8 +16,10 @@ namespace API.Controllers.Entities
     [ApiController]
     public class SellersController : BaseController<Seller, SellerDto>
     {
-        public SellersController(GenericService<Seller> service) : base(service)
+        private readonly SellerService _sellerService;
+        public SellersController(SellerService service) : base(service)
         {
+            _sellerService = service;
         }
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody]SellerRegisterDto registerDto)
@@ -39,6 +43,11 @@ namespace API.Controllers.Entities
                 UserId = user.Id,
             };
             return await base.CreateAsync(sellerDto);
+        }
+        [HttpGet("view-models")]
+        public async Task<List<SellerViewModel>> GetAll()
+        {
+            return await _sellerService.GetAllAsync();
         }
     }
 }
