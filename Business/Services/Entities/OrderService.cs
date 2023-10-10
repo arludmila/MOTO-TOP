@@ -1,4 +1,5 @@
-﻿using Data.Repositories;
+﻿using Contracts.ViewModels;
+using Data.Repositories;
 using Data.Repositories.Entities;
 using Entities.Core;
 using Entities.Enums;
@@ -14,7 +15,10 @@ namespace Business.Services.Entities
         {
             _orderRepository = repository;
         }
-
+        public async Task<List<OrderViewModel>> GetAllAsync()
+        {
+            return await _orderRepository.GetAllAsync();
+        }
         public async Task<double> GetOrderTotalAsync(int id)
         {
             return await _orderRepository.GetOrderTotalAsync(id);
