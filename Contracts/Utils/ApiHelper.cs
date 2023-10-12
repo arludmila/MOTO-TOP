@@ -41,7 +41,7 @@ namespace Contracts.Utils
                 return errorMessage;
             }
         }
-        public static async Task<List<T>> GetAsync<T>(string url)
+        public static async Task<List<T>> GetListAsync<T>(string url)
         {
             try
             {
@@ -70,7 +70,7 @@ namespace Contracts.Utils
                 return null; // You can handle this error case as needed
             }
         }
-        public static async Task<object> GetAsync(string url)
+        public static async Task<T> GetAsync<T>(string url)
         {
             try
             {
@@ -82,21 +82,21 @@ namespace Contracts.Utils
                     var content = await response.Content.ReadAsStringAsync();
 
                     // Deserialize the JSON content into a list of objects of type T
-                    object result = JsonConvert.DeserializeObject(content);
+                    T result = JsonConvert.DeserializeObject<T>(content);
                     return result;
                 }
                 else
                 {
                     // Operation failed
                     string errorMessage = "Operation failed. Status code: " + response.StatusCode;
-                    return null; // You can handle this error case as needed
+                    return default(T); // You can handle this error case as needed
                 }
             }
             catch (Exception ex)
             {
                 // Handle the exception appropriately, e.g., log it or return an error message.
                 string errorMessage = "An error occurred: " + ex.Message;
-                return null; // You can handle this error case as needed
+                return default(T); // You can handle this error case as needed
             }
         }
     }

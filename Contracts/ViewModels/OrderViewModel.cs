@@ -1,4 +1,5 @@
 ﻿using Entities.Enums;
+using Entities.Relationships;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace Contracts.ViewModels
         public DateTime DateSent { get; set; }
         public DateTime DateReceived { get; set; }
         public bool HasInvoice { get; set; }
-
+        // testing...
+        public List<OrderProductViewModel> OrderProducts { get; set; } = new List<OrderProductViewModel>();
     }
 }

@@ -21,6 +21,11 @@ namespace API.Controllers.Entities
         {
             return await _orderService.GetAllAsync();
         }
+        [HttpGet("view-models/{id}")]
+        public async Task<OrderViewModel> GetById(int id)
+        {
+            return await _orderService.GetByIdAsync(id);
+        }
         [HttpGet("getOrderTotal/{orderId}")]
         public async Task<double> GetOrderTotal(int orderId)
         {

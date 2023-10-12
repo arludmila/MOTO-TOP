@@ -1,6 +1,7 @@
 ﻿using Contracts.ViewModels;
 using Entities.Core;
 using Entities.Enums;
+using Entities.Relationships;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data.Repositories.Entities
@@ -52,6 +53,64 @@ namespace Data.Repositories.Entities
                 result.Add(orderVM);
             }
             return result;
+        }
+        public async Task<OrderViewModel> GetByIdAsync(int id)
+        {
+            var order = await _context.Set<Order>()
+                .Include(x => x.TransportCompany)
+                .Include(x => x.Seller)
+                    .ThenInclude(seller => seller.User)
+                .Include(x => x.Client)
+                .FirstOrDefaultAsync(x => x.Id == id);
+            var orderDetails = await _context.Set<OrderProduct>()
+                .Include(x => x.Product)
+                    .ThenInclude(product => product.Category)
+                .ToListAsync();
+            List<OrderProductViewModel> result = new List<OrderProductViewModel>();
+            foreach (var item in orderDetails)
+            {
+                var orderProductVM = new OrderProductViewModel()
+                {
+                    ProductId = item.ProductId,
+                    OrderId = item.OrderId,
+                    InvoiceId = item.InvoiceId,
+                    Quantity = item.Quantity,
+                    Price = item.Price,
+                    ProductCategoryName = item.Product.Category.Name,
+                    ProductName = item.Product.Name,
+                    ProductQuantity = item.Product.Quantity,
+                };
+                result.Add(orderProductVM);
+            }
+
+            string shipmentStatus = string.Empty;
+            switch (order.ShipmentStatus)
+            {
+                case ShipmentStatuses.Received:
+                    shipmentStatus = "Recibido";
+                    break;
+                case ShipmentStatuses.Preparing:
+                    shipmentStatus = "En Preparación";
+                    break;
+                case ShipmentStatuses.Shipped:
+                    shipmentStatus = "Enviado";
+                    break;
+                default:
+                    break;
+            }
+            var orderVM = new OrderViewModel
+            {
+                Id = order.Id,
+                ShipmentStatus = shipmentStatus,
+                ClientName = $"{order.Client.LastName}, {order.Client.FirstName}",
+                SellerName = $"{order.Seller.User.LastName}, {order.Seller.User.FirstName}",
+                TransportCompanyName = $"{order.TransportCompany.Name}",
+                DateSent = order.DateSent,
+                DateReceived = order.DateReceived,
+                HasInvoice = order.HasInvoice,
+                OrderProducts = result,
+            };
+            return orderVM;
         }
         public async Task<double> GetOrderTotalAsync(int id)
         {

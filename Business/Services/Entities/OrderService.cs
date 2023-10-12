@@ -19,6 +19,10 @@ namespace Business.Services.Entities
         {
             return await _orderRepository.GetAllAsync();
         }
+        public async Task<OrderViewModel> GetByIdAsync(int id)
+        {
+            return await _orderRepository.GetByIdAsync(id);
+        }
         public async Task<double> GetOrderTotalAsync(int id)
         {
             return await _orderRepository.GetOrderTotalAsync(id);
