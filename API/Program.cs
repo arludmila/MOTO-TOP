@@ -1,8 +1,10 @@
 using Business.Services;
 using Business.Services.Entities;
+using Business.Services.Relationships;
 using Data;
 using Data.Repositories;
 using Data.Repositories.Entities;
+using Data.Repositories.Relationships;
 using Entities.Core;
 using Entities.Relationships;
 
@@ -58,6 +60,8 @@ builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<SellerRepository>();
 builder.Services.AddScoped<SellerService>();
+builder.Services.AddScoped<SupplierProductRepository>();
+builder.Services.AddScoped<SupplierProductService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
