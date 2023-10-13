@@ -171,13 +171,13 @@ namespace DBSeeders
             var ordersFaker = new Faker<OrderDto>()
                .RuleFor(x => x.ClientId, f => f.PickRandom(clients).Id)
                .RuleFor(x => x.SellerId, f => f.PickRandom(sellers).Id)
-               .RuleFor(x => x.TransportCompanyId, f => f.PickRandom(transportCompanies).Id)
-               .RuleFor(x => x.DateSent, f => f.Date.Past());
+               .RuleFor(x => x.TransportCompanyId, f => f.PickRandom(transportCompanies).Id);
+       //        .RuleFor(x => x.DateSent, f => f.Date.Past());
             for (int i = 0; i < quantity; i++)
             {
                 var order = ordersFaker.Generate();
-                order.ShipmentStatus = Entities.Enums.ShipmentStatuses.Shipped;
-                order.DateReceived = order.DateSent.AddDays(3);
+            //    order.ShipmentStatus = Entities.Enums.ShipmentStatuses.Shipped;
+              //  order.DateReceived = order.DateSent.AddDays(3);
                 Console.WriteLine(await ApiHelper.PostAsync("https://localhost:7215/api/orders", order));
             }
         }
@@ -201,7 +201,7 @@ namespace DBSeeders
             var orders = await ApiHelper.GetAsync<Order>("https://localhost:7215/api/orders");
             var invoicesFaker = new Faker<InvoiceDto>()
                 .RuleFor(x => x.Date, f => f.Date.Recent(1));
-            foreach (var order in orders)
+            /*foreach (var order in orders)
             {
                 var invoiceExists = (bool)await ApiHelper.GetAsync($"https://localhost:7215/api/invoices/orderHasInvoice/{order.Id}");
                 if (!invoiceExists)
@@ -212,7 +212,7 @@ namespace DBSeeders
                     Console.WriteLine(await ApiHelper.PostAsync("https://localhost:7215/api/invoices", invoice));
 
                 }
-            }
+            }*/
         }
 
     }

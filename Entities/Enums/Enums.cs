@@ -8,6 +8,7 @@
     }
     public enum PaymentMethods
     {
+        None,
         Cash,
         CreditCard,
         DebitCard,

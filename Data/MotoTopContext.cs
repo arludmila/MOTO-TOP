@@ -46,6 +46,14 @@ namespace Data
                 .Entity<User>()
                 .Property(u => u.Role)
                 .HasConversion(new EnumToStringConverter<Roles>());
+            // no action para ON DELETE
+            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+            {
+                foreach (var foreignKey in entityType.GetForeignKeys())
+                {
+                    foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
+                }
+            }
         }
         // Entities tables
         public DbSet<BillingTransaction> BillingTransactions { get; set; }
