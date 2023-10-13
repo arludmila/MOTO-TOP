@@ -19,9 +19,9 @@ namespace Business.Services.Entities
         {
             _invoiceRepository = repository;
         }
-        public override async Task<Invoice> CreateAsync(Invoice invoice)
+        public async Task<Invoice> CreateInvoiceAsync(Invoice invoice)
         {
-            return await _invoiceRepository.CreateAsync(invoice);
+            return await _invoiceRepository.CreateInvoiceAsync(invoice);
         }
         public async Task<bool> OrderHasInvoiceAsync(int orderId)
         {

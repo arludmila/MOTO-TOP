@@ -14,7 +14,7 @@ namespace Business.Services
         // Create operation (Async)
         public virtual async Task<T> CreateAsync(T entity)
         {
-            return await _repository.CreateAsync(entity);
+            return await _repository.CreateInvoiceAsync(entity);
         }
 
         // Read operation (Async) - Get an entity by ID

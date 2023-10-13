@@ -1,5 +1,6 @@
 ﻿using Contracts.DTOs.Entities;
 using Entities.Core;
+using Entities.Enums;
 using Entities.Relationships;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics.SymbolStore;
@@ -12,10 +13,11 @@ namespace Data.Repositories.Entities
         {
 
         }
-        public override async Task<Invoice> CreateAsync(Invoice invoice)
+        public override async Task<Invoice> CreateInvoiceAsync(Invoice invoice)
         {
-
-            
+            var order = await _context.Set<Order>().FirstAsync(x => x.Id == invoice.OrderId);
+            order.HasInvoice = true;
+            order.ShipmentStatus = ShipmentStatuses.Preparing;
             _context.Set<Invoice>().Add(invoice);
             await _context.SaveChangesAsync();
 

@@ -99,5 +99,30 @@ namespace Contracts.Utils
                 return default(T); // You can handle this error case as needed
             }
         }
+        public static async Task<string> DeleteAsync(string url)
+        {
+            try
+            {
+                var response = await _httpClient.DeleteAsync(url);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return await response.Content.ReadAsStringAsync();
+                }
+                else
+                {
+                    // Operation failed
+                    string errorMessage = "Operation failed. Status code: " + response.StatusCode;
+                    return errorMessage;
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle the exception appropriately, e.g., log it or return an error message.
+                string errorMessage = "An error occurred: " + ex.Message;
+                return errorMessage;
+            }
+        }
+
     }
 }

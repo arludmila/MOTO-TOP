@@ -14,17 +14,43 @@ namespace Data.Repositories.Entities
         }
         public async Task<List<OrderViewModel>> GetAllAsync()
         {
-
             var orders = await _context.Set<Order>()
                 .Include(x => x.TransportCompany)
                 .Include(x => x.Seller)
                     .ThenInclude(seller => seller.User)
                 .Include(x => x.Client)
                 .ToListAsync();
+
             List<OrderViewModel> result = new List<OrderViewModel>();
+
             foreach (var order in orders)
             {
+                var orderDetails = await _context.Set<OrderProduct>()
+                    .Include(x => x.Product)
+                        .ThenInclude(product => product.Category)
+                    .Where(x => x.OrderId == order.Id)
+                    .ToListAsync();
+
+                List<OrderProductViewModel> orderProductResult = new List<OrderProductViewModel>();
+
+                foreach (var item in orderDetails)
+                {
+                    var orderProductVM = new OrderProductViewModel()
+                    {
+                        ProductId = item.ProductId,
+                        OrderId = item.OrderId,
+                        InvoiceId = item.InvoiceId,
+                        Quantity = item.Quantity,
+                        Price = item.Price,
+                        ProductCategoryName = item.Product.Category.Name,
+                        ProductName = item.Product.Name,
+                        ProductQuantity = item.Product.Quantity,
+                    };
+                    orderProductResult.Add(orderProductVM);
+                }
+
                 string shipmentStatus = string.Empty;
+
                 switch (order.ShipmentStatus)
                 {
                     case ShipmentStatuses.Received:
@@ -39,6 +65,7 @@ namespace Data.Repositories.Entities
                     default:
                         break;
                 }
+
                 var orderVM = new OrderViewModel
                 {
                     Id = order.Id,
@@ -49,11 +76,15 @@ namespace Data.Repositories.Entities
                     DateSent = order.DateSent,
                     DateReceived = order.DateReceived,
                     HasInvoice = order.HasInvoice,
+                    OrderProducts = orderProductResult,
                 };
+
                 result.Add(orderVM);
             }
+
             return result;
         }
+
         public async Task<OrderViewModel> GetByIdAsync(int id)
         {
             var order = await _context.Set<Order>()
@@ -65,6 +96,7 @@ namespace Data.Repositories.Entities
             var orderDetails = await _context.Set<OrderProduct>()
                 .Include(x => x.Product)
                     .ThenInclude(product => product.Category)
+                .Where(x => x.OrderId == id)
                 .ToListAsync();
             List<OrderProductViewModel> result = new List<OrderProductViewModel>();
             foreach (var item in orderDetails)

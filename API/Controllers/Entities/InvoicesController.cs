@@ -21,7 +21,7 @@ namespace API.Controllers.Entities
         {
             try
             {
-                var createdEntity = await _service.CreateAsync(DtoMapper.CreateEntityFromDto<Invoice>(dto));
+                var createdEntity = await _invoiceService.CreateInvoiceAsync(DtoMapper.CreateEntityFromDto<Invoice>(dto));
                 return Ok(createdEntity);
             }
             catch (Exception ex)
