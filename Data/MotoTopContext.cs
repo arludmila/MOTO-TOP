@@ -25,8 +25,6 @@ namespace Data
         {
             base.OnModelCreating(modelBuilder);
             // claves compuestas
-            modelBuilder.Entity<OrderProduct>()
-                .HasKey(op => new { op.ProductId, op.OrderId });
             modelBuilder.Entity<ProductDiscount>()
               .HasKey(p => new { p.ProductId, p.ProductDiscountId });
             modelBuilder.Entity<SellerClient>()

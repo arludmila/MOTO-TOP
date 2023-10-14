@@ -39,7 +39,7 @@ namespace Data.Repositories.Entities
                     Date = invoice.Date,
                     TotalAmount = invoice.Amount,
                     DebtAmount = payedAmount,
-                    ClientId = invoice.Order.ClientId,
+                    ClientId = invoice.ClientId,
                 };
                 result.Add(invoiceVM);
             }
@@ -63,6 +63,7 @@ namespace Data.Repositories.Entities
             {
                 Date = dto.Date,
                 Amount = dto.Amount,
+                ClientId = dto.ClientId,
             };
             _context.Set<Invoice>().Add(invoice);
             await _context.SaveChangesAsync();
@@ -77,8 +78,12 @@ namespace Data.Repositories.Entities
                     Price = item.Price,
                 };
                 _context.Set<OrderProduct>().Add(orderProduct);
+                await _context.SaveChangesAsync();
             }
+
             await _context.SaveChangesAsync();
+            await SetOrderProductsIdsAsync(invoice);
+            await CreateBTAsync(invoice);
             return invoice;
         }
         public async Task<bool> OrderHasInvoiceAsync(int orderId)
@@ -93,7 +98,7 @@ namespace Data.Repositories.Entities
             {
                 Amount = invoice.Amount,
                 InvoiceId = invoice.Id,
-                ClientId = order.ClientId,
+                ClientId = invoice.ClientId,
                 DocumentNumber = invoice.Id,
                 DocumentType = "Invoice"
             };
