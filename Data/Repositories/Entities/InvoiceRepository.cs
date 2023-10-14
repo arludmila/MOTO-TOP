@@ -1,4 +1,5 @@
 ﻿using Contracts.DTOs.Entities;
+using Contracts.ViewModels;
 using Entities.Core;
 using Entities.Enums;
 using Entities.Relationships;
@@ -13,6 +14,37 @@ namespace Data.Repositories.Entities
         {
 
         }
+        public async Task<List<InvoiceViewModel>> GetAllVMAsync()
+        {
+            var invoices = await _context.Set<Invoice>()
+                .Include(x => x.Order)
+                .ToListAsync();
+            var billingTransactions = await _context.Set<BillingTransaction>()
+                .ToListAsync();
+            var result = new List<InvoiceViewModel>();
+            foreach (var invoice in invoices)
+            {
+                double payedAmount = 0;
+                foreach (var bt in billingTransactions)
+                {
+                    if (bt.InvoiceId == invoice.Id)
+                    {
+                        payedAmount += bt.Amount;
+                    }
+                }
+                var invoiceVM = new InvoiceViewModel
+                {
+                    Id = invoice.Id,
+                    OrderId = invoice.OrderId,
+                    Date = invoice.Date,
+                    TotalAmount = invoice.Amount,
+                    DebtAmount = payedAmount,
+                    ClientId = invoice.Order.ClientId,
+                };
+                result.Add(invoiceVM);
+            }
+            return result;
+        }
         public override async Task<Invoice> CreateInvoiceAsync(Invoice invoice)
         {
             var order = await _context.Set<Order>().FirstAsync(x => x.Id == invoice.OrderId);
@@ -23,6 +55,30 @@ namespace Data.Repositories.Entities
 
             await CreateBTAsync(invoice);
             await SetOrderProductsIdsAsync(invoice);
+            return invoice;
+        }
+        public async Task<Invoice> CreateInvoiceCentralAsync(InvoiceWithDetailsDto dto)
+        {
+            var invoice = new Invoice()
+            {
+                Date = dto.Date,
+                Amount = dto.Amount,
+            };
+            _context.Set<Invoice>().Add(invoice);
+            await _context.SaveChangesAsync();
+
+            foreach (var item in dto.InvoiceDetails)
+            {
+                var orderProduct = new OrderProduct()
+                {
+                    ProductId = item.ProductId,
+                    InvoiceId = invoice.Id,
+                    Quantity = item.Quantity,
+                    Price = item.Price,
+                };
+                _context.Set<OrderProduct>().Add(orderProduct);
+            }
+            await _context.SaveChangesAsync();
             return invoice;
         }
         public async Task<bool> OrderHasInvoiceAsync(int orderId)

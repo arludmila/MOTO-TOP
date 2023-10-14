@@ -2,6 +2,7 @@
 using Business.Services.Entities;
 using Contracts.DTOs.Entities;
 using Contracts.Utils;
+using Contracts.ViewModels;
 using Entities.Core;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,6 +16,16 @@ namespace API.Controllers.Entities
         public InvoicesController(InvoiceService service) : base(service)
         {
             _invoiceService = service;
+        }
+        [HttpPost("detailed")]
+        public async Task<Invoice> CreateInvoiceCentralAsync(InvoiceWithDetailsDto dto)
+        {
+            return await _invoiceService.CreateInvoiceCentralAsync(dto);
+        }
+        [HttpGet("view-models")]
+        public async Task<List<InvoiceViewModel>> GetAllVMAsync()
+        {
+            return await _invoiceService.GetAllVMAsync();
         }
         [HttpPost]
         public override async Task<IActionResult> CreateAsync([FromBody] InvoiceDto dto)

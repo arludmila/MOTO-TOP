@@ -1,4 +1,6 @@
-﻿using Data;
+﻿using Contracts.DTOs.Entities;
+using Contracts.ViewModels;
+using Data;
 using Data.Repositories;
 using Data.Repositories.Entities;
 using Entities.Core;
@@ -18,6 +20,14 @@ namespace Business.Services.Entities
         public InvoiceService(InvoiceRepository repository) : base(repository)
         {
             _invoiceRepository = repository;
+        }
+        public async Task<Invoice> CreateInvoiceCentralAsync(InvoiceWithDetailsDto dto)
+        {
+            return await _invoiceRepository.CreateInvoiceCentralAsync(dto);
+        }
+        public async Task<List<InvoiceViewModel>> GetAllVMAsync()
+        {
+            return await _invoiceRepository.GetAllVMAsync();
         }
         public async Task<Invoice> CreateInvoiceAsync(Invoice invoice)
         {
