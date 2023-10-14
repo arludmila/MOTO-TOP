@@ -2,7 +2,7 @@
 
 namespace Entities.Relationships
 {
-    public class SupplierProduct
+    public class SupplierProduct : EntityBase
     {
         public int ProductId { get; set; }
         public int SupplierId { get; set; }

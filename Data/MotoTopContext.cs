@@ -29,8 +29,6 @@ namespace Data
               .HasKey(p => new { p.ProductId, p.ProductDiscountId });
             modelBuilder.Entity<SellerClient>()
              .HasKey(svc => new { svc.SellerId, svc.ClientId });
-            modelBuilder.Entity<SupplierProduct>()
-               .HasKey(spp => new { spp.ProductId, spp.SupplierId });
             // enums a string
             modelBuilder
                 .Entity<Order>()
