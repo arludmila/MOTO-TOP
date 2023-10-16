@@ -1,6 +1,4 @@
-﻿using Azure;
-using Business.Services;
-using Business.Services.Entities;
+﻿using Business.Services.Entities;
 using Contracts.DTOs.Entities;
 using Contracts.Utils;
 using Contracts.ViewModels;
@@ -22,10 +20,10 @@ namespace API.Controllers.Entities
             _sellerService = service;
         }
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody]SellerRegisterDto registerDto)
+        public async Task<IActionResult> Register([FromBody] SellerRegisterDto registerDto)
         {
             // ¡¡¡esto deberia venir en el dto de la llamada ya!!!
-            PasswordHasher<string> passwordHasher = new();
+            //PasswordHasher<string> passwordHasher = new();
             //registerDto.PasswordHash = passwordHasher.HashPassword(string.Empty, registerDto.PasswordHash);
             var userDto = new UserDto()
             {
@@ -33,6 +31,8 @@ namespace API.Controllers.Entities
                 LastName = registerDto.LastName,
                 Email = registerDto.Email,
                 PasswordHash = registerDto.PasswordHash,
+                DocumentNumber = registerDto.DocumentNumber,
+                DocumentType = registerDto.DocumentType,
                 Role = Roles.Seller,
             };
             var response = await ApiHelper.PostAsync("https://localhost:7215/api/users", userDto);

@@ -29,6 +29,8 @@ namespace Data.Repositories.Entities
                     LastName = seller.User.LastName,
                     Zone = seller.Zone,
                     Email = seller.User.Email,
+                    DocumentType = seller.User.DocumentType,
+                    DocumentNumber = seller.User.DocumentNumber,
                 };
                 result.Add(sellerVM);
             }

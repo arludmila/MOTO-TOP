@@ -9,5 +9,6 @@ namespace Contracts.DTOs.Entities
     public class SellerRegisterDto : UserDto
     {
         public string Zone { get; set; }
+
     }
 }

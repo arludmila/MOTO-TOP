@@ -7,5 +7,6 @@ namespace Contracts.DTOs.Entities
     {
         public string Zone { get; set; }
         public int UserId { get; set; }
+
     }
 }
