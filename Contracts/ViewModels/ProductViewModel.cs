@@ -11,7 +11,8 @@ namespace Contracts.ViewModels
         public int Id { get; set; }
         public string CategoryName { get; set; }
         public string Name { get; set; }
-        public double Price { get; set; }
+        public double PurchasePrice { get; set; }
+        public double SellingPrice { get; set; }
         public string Description { get; set; }
         public int Quantity { get; set; }
         

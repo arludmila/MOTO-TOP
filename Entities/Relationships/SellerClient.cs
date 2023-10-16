@@ -8,6 +8,6 @@ namespace Entities.Relationships
         public int ClientId { get; set; }
         public Client Client { get; set; } = null!;
         public Seller Seller { get; set; } = null!;
-        public DateTime Date { get; set; }
+        public DateTime? Date { get; set; }
     }
 }

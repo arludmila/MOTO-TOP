@@ -36,12 +36,20 @@ namespace Data
                 .HasConversion(new EnumToStringConverter<ShipmentStatuses>());
             modelBuilder
                 .Entity<BillingTransaction>()
-                .Property(d => d.PaymentMethod)
+                .Property(bt => bt.PaymentMethod)
                 .HasConversion(new EnumToStringConverter<PaymentMethods>());
             modelBuilder
                 .Entity<User>()
                 .Property(u => u.Role)
                 .HasConversion(new EnumToStringConverter<Roles>());
+            modelBuilder
+                .Entity<Client>()
+                .Property(c => c.DocumentType)
+                .HasConversion(new EnumToStringConverter<PersonDocType>());
+            modelBuilder
+                .Entity<User>()
+                .Property(u => u.DocumentType)
+                .HasConversion(new EnumToStringConverter<PersonDocType>());
             // no action para ON DELETE
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
             {

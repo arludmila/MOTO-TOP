@@ -27,7 +27,8 @@ namespace Data.Repositories.Entities
                     Id = product.Id,
                     Name = product.Name,
                     Description = product.Description,
-                    Price = product.Price,
+                    SellingPrice = product.SellingPrice,
+                    PurchasePrice = product.PurchasePrice,
                     Quantity = product.Quantity,
                     CategoryName = product.Category.Name
                 };

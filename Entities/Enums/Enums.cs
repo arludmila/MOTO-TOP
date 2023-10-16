@@ -20,4 +20,10 @@
         OfficeWorker,
         Seller
     }
+    public enum PersonDocType
+    {
+        DNI,
+        CUIT,
+        CUIL
+    }
 }
