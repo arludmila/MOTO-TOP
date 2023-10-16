@@ -27,7 +27,7 @@ namespace DBSeeders
             var productFaker = new Faker<ProductDto>()
             .RuleFor(x => x.Name, f => f.Vehicle.Manufacturer())
             .RuleFor(x => x.Quantity, f => f.Random.Number(20, 100))
-            .RuleFor(x => x.Price, f => f.Random.Double(1000, 50000))
+            //.RuleFor(x => x.Price, f => f.Random.Double(1000, 50000))
             .RuleFor(x => x.CategoryId, f => f.PickRandom(categories).Id)
             .RuleFor(x => x.Description, f => f.Vehicle.Model());
             for (int i = 0; i < quantity; i++)

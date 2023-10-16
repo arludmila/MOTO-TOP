@@ -17,7 +17,8 @@ namespace Data.Repositories.Relationships
             if (product != null)
             {
                 product.Quantity += supplierProduct.Quantity;
-                product.PurchasePrice = supplierProduct.Price;
+                product.PurchasePrice = supplierProduct.PurchasePrice;
+                product.SellingPrice = supplierProduct.SellingPrice;
             }
             await _context.SaveChangesAsync();
             return supplierProduct;
