@@ -1,4 +1,5 @@
 ﻿using Entities.Enums;
+using Entities.Relationships;
 
 namespace Entities.Core
 {
@@ -14,6 +15,6 @@ namespace Entities.Core
         public TransportCompany TransportCompany { get; set; }
         public Client Client { get; set; }
         public Seller Seller { get; set; }
-
+        public List<OrderProduct> OrderProducts { get; set; } = new List<OrderProduct>();
     }
 }

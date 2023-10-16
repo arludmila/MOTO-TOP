@@ -58,6 +58,10 @@ namespace Data
                     foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
                 }
             }
+            modelBuilder.Entity<Order>()
+                .HasMany(o => o.OrderProducts)
+                .WithOne(op => op.Order)
+                .OnDelete(DeleteBehavior.Cascade);
         }
         // Entities tables
         public DbSet<BillingTransaction> BillingTransactions { get; set; }
