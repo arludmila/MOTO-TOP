@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Business.Services.Entities
 {
-    public class BillingTransactionService : GenericService<BillingTransaction>
+    public class BillingTransactionService : GenericService<BillingTransaction, int>
     {
         private readonly BillingTransactionRepository _btRepository;
 

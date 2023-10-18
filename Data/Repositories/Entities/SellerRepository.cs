@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Data.Repositories.Entities
 {
-    public class SellerRepository : GenericRepository<Seller>
+    public class SellerRepository : GenericRepository<Seller, int>
     {
         public SellerRepository(MotoTopContext context) : base(context)
         {

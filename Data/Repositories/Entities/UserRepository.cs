@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Data.Repositories.Entities
 {
-    public class UserRepository : GenericRepository<User>
+    public class UserRepository : GenericRepository<User, int>
     {
         public UserRepository(MotoTopContext context) : base(context)
         {

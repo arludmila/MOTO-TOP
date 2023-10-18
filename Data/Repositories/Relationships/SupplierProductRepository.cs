@@ -3,7 +3,7 @@ using Entities.Relationships;
 
 namespace Data.Repositories.Relationships
 {
-    public class SupplierProductRepository : GenericRepository<SupplierProduct>
+    public class SupplierProductRepository : GenericRepository<SupplierProduct, int>
     {
         public SupplierProductRepository(MotoTopContext context) : base(context)
         {

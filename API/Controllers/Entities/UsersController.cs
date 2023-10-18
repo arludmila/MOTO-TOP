@@ -9,7 +9,7 @@ namespace API.Controllers.Entities
 {
     [Route("api/users")]
     [ApiController]
-    public class UsersController : BaseController<User, UserDto>
+    public class UsersController : BaseController<User, UserDto, int>
     {
         private readonly UserService _userService;
         public UsersController(UserService service) : base(service)

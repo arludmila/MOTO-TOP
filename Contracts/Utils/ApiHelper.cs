@@ -81,9 +81,18 @@ namespace Contracts.Utils
                     // If the request was successful, read the content as a string
                     var content = await response.Content.ReadAsStringAsync();
 
-                    // Deserialize the JSON content into a list of objects of type T
-                    T result = JsonConvert.DeserializeObject<T>(content);
-                    return result;
+                    // Deserialize the JSON content into object of type T
+                    if (typeof(T) == typeof(string))
+                    {
+                        // If T is string, return the content as is
+                        return (T)(object)content;
+                    }
+                    else
+                    {
+                        // Deserialize JSON content into object of type T
+                        T result = JsonConvert.DeserializeObject<T>(content);
+                        return result;
+                    }
                 }
                 else
                 {

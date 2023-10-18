@@ -12,7 +12,7 @@ namespace API.Controllers.Entities
 {
     [Route("api/sellers")]
     [ApiController]
-    public class SellersController : BaseController<Seller, SellerDto>
+    public class SellersController : BaseController<Seller, SellerDto, int>
     {
         private readonly SellerService _sellerService;
         public SellersController(SellerService service) : base(service)

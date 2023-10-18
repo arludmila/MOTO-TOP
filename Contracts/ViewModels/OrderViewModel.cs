@@ -25,7 +25,7 @@ namespace Contracts.ViewModels
 {
     public class OrderViewModel
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string ShipmentStatus { get; set; }
         public string ClientName { get; set; }
         public string SellerName { get; set; }

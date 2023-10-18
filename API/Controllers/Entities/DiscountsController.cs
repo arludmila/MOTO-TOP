@@ -7,9 +7,9 @@ namespace API.Controllers.Entities
 {
     [Route("api/discounts")]
     [ApiController]
-    public class DiscountsController : BaseController<Discount, DiscountDto>
+    public class DiscountsController : BaseController<Discount, DiscountDto, int>
     {
-        public DiscountsController(GenericService<Discount> service) : base(service)
+        public DiscountsController(GenericService<Discount, int> service) : base(service)
         {
         }
     }

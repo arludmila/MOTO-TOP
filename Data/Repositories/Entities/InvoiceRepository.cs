@@ -4,11 +4,10 @@ using Entities.Core;
 using Entities.Enums;
 using Entities.Relationships;
 using Microsoft.EntityFrameworkCore;
-using System.Diagnostics.SymbolStore;
 
 namespace Data.Repositories.Entities
 {
-    public class InvoiceRepository : GenericRepository<Invoice>
+    public class InvoiceRepository : GenericRepository<Invoice, int>
     {
         public InvoiceRepository(MotoTopContext context) : base(context)
         {
@@ -47,7 +46,7 @@ namespace Data.Repositories.Entities
         }
         public override async Task<Invoice> CreateInvoiceAsync(Invoice invoice)
         {
-            var order = await _context.Set<Order>().FirstAsync(x => x.Id == invoice.OrderId);
+            var order = await _context.Set<Order>().FirstAsync(x => x.Id.Equals(invoice.OrderId));
             order.HasInvoice = true;
             order.ShipmentStatus = ShipmentStatuses.Preparing;
             _context.Set<Invoice>().Add(invoice);
@@ -88,11 +87,11 @@ namespace Data.Repositories.Entities
         }
         public async Task<bool> OrderHasInvoiceAsync(int orderId)
         {
-            return await _context.Set<Invoice>().AnyAsync(x => x.OrderId == orderId);
+            return await _context.Set<Invoice>().AnyAsync(x => x.OrderId.Equals(orderId));
         }
         private async Task CreateBTAsync(Invoice invoice)
         {
-            var order = await _context.Set<Order>().FirstOrDefaultAsync(x => x.Id == invoice.OrderId);
+            var order = await _context.Set<Order>().FirstOrDefaultAsync(x => x.Id.Equals(invoice.OrderId));
 
             var billingTransaction = new BillingTransaction()
             {
@@ -116,7 +115,7 @@ namespace Data.Repositories.Entities
                 item.Product.Quantity -= item.Quantity;
             }
             await _context.SaveChangesAsync();
-            
+
         }
     }
 }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Data.Repositories.Entities
 {
-    public class BillingTransactionRepository : GenericRepository<BillingTransaction>
+    public class BillingTransactionRepository : GenericRepository<BillingTransaction, int>
     {
         public BillingTransactionRepository(MotoTopContext context) : base(context)
         {

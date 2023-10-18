@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Business.Services.Entities
 {
-    public class UserService : GenericService<User>
+    public class UserService : GenericService<User, int>
     {
         private readonly UserRepository _userRepository;
 

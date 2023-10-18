@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Business.Services.Entities
 {
-    public class OrderService : GenericService<Order>
+    public class OrderService : GenericService<Order, Guid>
     {
         private readonly OrderRepository _orderRepository;
 
@@ -19,15 +19,15 @@ namespace Business.Services.Entities
         {
             return await _orderRepository.GetAllAsync();
         }
-        public async Task<OrderViewModel> GetByIdAsync(int id)
+        public async Task<OrderViewModel> GetByIdAsync(Guid id)
         {
             return await _orderRepository.GetByIdAsync(id);
         }
-        public async Task<double> GetOrderTotalAsync(int id)
+        public async Task<double> GetOrderTotalAsync(Guid id)
         {
             return await _orderRepository.GetOrderTotalAsync(id);
         }
-        public async Task<ShipmentStatuses> GetOrderStatusAsync(int id)
+        public async Task<ShipmentStatuses> GetOrderStatusAsync(Guid id)
         {
             return await _orderRepository.GetOrderStatusAsync(id);
         }

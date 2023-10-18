@@ -10,7 +10,7 @@ namespace Contracts.ViewModels
     public class InvoiceViewModel
     {
         public int Id { get; set; }
-        public int? OrderId { get; set; }
+        public Guid? OrderId { get; set; }
         public int ClientId { get; set; }
         public DateTime Date { get; set; }
         public double TotalAmount { get; set; }

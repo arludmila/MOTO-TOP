@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Business.Services.Entities
 {
-    public class ProductService : GenericService<Product>
+    public class ProductService : GenericService<Product, int>
     {
         private readonly ProductRepository _productRepository;
 

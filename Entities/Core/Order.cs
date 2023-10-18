@@ -3,8 +3,9 @@ using Entities.Relationships;
 
 namespace Entities.Core
 {
-    public class Order : EntityBase
+    public class Order
     {
+        public Guid Id { get; set; }
         public ShipmentStatuses ShipmentStatus { get; set; }
         public DateTime DateSent { get; set; }
         public DateTime DateReceived { get; set; }

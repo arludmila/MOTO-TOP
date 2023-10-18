@@ -8,7 +8,7 @@ namespace API.Controllers.Entities
 {
     [Route("api/billing-transactions")]
     [ApiController]
-    public class BillingTransactionsController : BaseController<BillingTransaction, BillingTransactionDto>
+    public class BillingTransactionsController : BaseController<BillingTransaction, BillingTransactionDto, int>
     {
         private readonly BillingTransactionService _btService;
         public BillingTransactionsController(BillingTransactionService service) : base(service)

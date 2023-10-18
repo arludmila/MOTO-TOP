@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Business.Services.Entities
 {
-    public class SellerService : GenericService<Seller>
+    public class SellerService : GenericService<Seller, int>
     {
         private readonly SellerRepository _sellerRepository;
 

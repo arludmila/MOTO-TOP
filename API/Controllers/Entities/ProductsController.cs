@@ -9,7 +9,7 @@ namespace API.Controllers.Entities
 {
     [Route("api/products")]
     [ApiController]
-    public class ProductsController : BaseController<Product, ProductDto>
+    public class ProductsController : BaseController<Product, ProductDto, int>
     {
         private readonly ProductService _productService;
         public ProductsController(ProductService service) : base(service)

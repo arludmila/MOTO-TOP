@@ -12,7 +12,7 @@ namespace API.Controllers.Relationships
 {
     [Route("api/supplier-products")]
     [ApiController]
-    public class SupplierProductsController : BaseController<SupplierProduct, SupplierProductDto>
+    public class SupplierProductsController : BaseController<SupplierProduct, SupplierProductDto, int>
     {
         private readonly SupplierProductService _supplierProductService;
         public SupplierProductsController(SupplierProductService service) : base(service)

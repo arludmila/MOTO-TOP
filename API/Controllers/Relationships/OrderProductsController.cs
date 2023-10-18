@@ -7,9 +7,9 @@ namespace API.Controllers.Relationships
 {
     [Route("api/order-products")]
     [ApiController]
-    public class OrderProductsController : BaseController<OrderProduct, OrderProductDto>
+    public class OrderProductsController : BaseController<OrderProduct, OrderProductDto, int>
     {
-        public OrderProductsController(GenericService<OrderProduct> service)
+        public OrderProductsController(GenericService<OrderProduct, int> service)
             : base(service)
         {
         }

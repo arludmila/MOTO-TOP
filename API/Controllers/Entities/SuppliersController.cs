@@ -7,9 +7,9 @@ namespace API.Controllers.Entities
 {
     [Route("api/suppliers")]
     [ApiController]
-    public class SuppliersController : BaseController<Supplier, SupplierDto>
+    public class SuppliersController : BaseController<Supplier, SupplierDto, int>
     {
-        public SuppliersController(GenericService<Supplier> service)
+        public SuppliersController(GenericService<Supplier, int> service)
             : base(service)
         {
         }

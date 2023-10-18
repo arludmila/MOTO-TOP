@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Business.Services.Relationships
 {
-    public class SupplierProductService : GenericService<SupplierProduct>
+    public class SupplierProductService : GenericService<SupplierProduct, int>
     {
         private readonly SupplierProductRepository _supplierProductRepository;
 

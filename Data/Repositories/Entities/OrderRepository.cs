@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Data.Repositories.Entities
 {
-    public class OrderRepository : GenericRepository<Order>
+    public class OrderRepository : GenericRepository<Order, Guid>
     {
         public OrderRepository(MotoTopContext context) : base(context)
         {
@@ -28,7 +28,7 @@ namespace Data.Repositories.Entities
                 var orderDetails = await _context.Set<OrderProduct>()
                     .Include(x => x.Product)
                         .ThenInclude(product => product.Category)
-                    .Where(x => x.OrderId == order.Id)
+                    .Where(x => x.OrderId.Equals(order.Id))
                     .ToListAsync();
 
                 List<OrderProductViewModel> orderProductResult = new List<OrderProductViewModel>();
@@ -85,14 +85,14 @@ namespace Data.Repositories.Entities
             return result;
         }
 
-        public async Task<OrderViewModel> GetByIdAsync(int id)
+        public async Task<OrderViewModel> GetByIdAsync(Guid id)
         {
             var order = await _context.Set<Order>()
                 .Include(x => x.TransportCompany)
                 .Include(x => x.Seller)
                     .ThenInclude(seller => seller.User)
                 .Include(x => x.Client)
-                .FirstOrDefaultAsync(x => x.Id == id);
+                .FirstOrDefaultAsync(x => x.Id.Equals(id));
             var orderDetails = await _context.Set<OrderProduct>()
                 .Include(x => x.Product)
                     .ThenInclude(product => product.Category)
@@ -144,7 +144,7 @@ namespace Data.Repositories.Entities
             };
             return orderVM;
         }
-        public async Task<double> GetOrderTotalAsync(int id)
+        public async Task<double> GetOrderTotalAsync(Guid id)
         {
             double total = 0;
             var orderProducts = await _context.OrderProducts
@@ -158,9 +158,9 @@ namespace Data.Repositories.Entities
 
             return total;
         }
-        public async Task<ShipmentStatuses> GetOrderStatusAsync(int id)
+        public async Task<ShipmentStatuses> GetOrderStatusAsync(Guid id)
         {
-            var order = await _context.Orders.FirstOrDefaultAsync(x => x.Id == id);
+            var order = await _context.Orders.FirstOrDefaultAsync(x => x.Id.Equals(id));
             return order.ShipmentStatus;
         }
     }

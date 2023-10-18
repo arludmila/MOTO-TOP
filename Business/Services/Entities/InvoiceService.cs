@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Business.Services.Entities
 {
-    public class InvoiceService : GenericService<Invoice>
+    public class InvoiceService : GenericService<Invoice, int>
     {
         private readonly InvoiceRepository _invoiceRepository;
 

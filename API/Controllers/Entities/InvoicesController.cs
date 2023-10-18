@@ -10,7 +10,7 @@ namespace API.Controllers.Entities
 {
     [Route("api/invoices")]
     [ApiController]
-    public class InvoicesController : BaseController<Invoice, InvoiceDto>
+    public class InvoicesController : BaseController<Invoice, InvoiceDto, int>
     {
         private readonly InvoiceService _invoiceService;
         public InvoicesController(InvoiceService service) : base(service)

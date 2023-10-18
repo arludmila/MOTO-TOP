@@ -8,9 +8,9 @@ namespace API.Controllers.Entities
     //TODO: arreglar los PUT para que acepten el id y el dto en vez de la entidad...
     [Route("api/categories")]
     [ApiController]
-    public class CategoriesController : BaseController<Category, CategoryDto>
+    public class CategoriesController : BaseController<Category, CategoryDto, int>
     {
-        public CategoriesController(GenericService<Category> service) : base(service)
+        public CategoriesController(GenericService<Category, int> service) : base(service)
         {
         }
 

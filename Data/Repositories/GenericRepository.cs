@@ -3,9 +3,10 @@
 namespace Data.Repositories
 {
     // T = Entity
-    public class GenericRepository<T> where T : class
+    public class GenericRepository<T, TId> where T : class
     {
         protected readonly MotoTopContext _context;
+
         public GenericRepository(MotoTopContext context)
         {
             _context = context;
@@ -20,7 +21,7 @@ namespace Data.Repositories
         }
 
         // Read operation (Async) - Get an entity by ID
-        public virtual async Task<T> GetByIdAsync(int id)
+        public virtual async Task<T> GetByIdAsync(TId id)
         {
             return await _context.Set<T>().FindAsync(id);
         }
@@ -40,7 +41,7 @@ namespace Data.Repositories
         }
 
         // Delete operation (Async)
-        public virtual async Task DeleteAsync(int id)
+        public virtual async Task DeleteAsync(TId id)
         {
             var entity = await GetByIdAsync(id);
             if (entity != null)

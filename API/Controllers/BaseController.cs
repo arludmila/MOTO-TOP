@@ -5,11 +5,11 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Controllers
 {
     [ApiController]
-    public class BaseController<TEntity, TDto> : ControllerBase where TEntity : class, new()
+    public class BaseController<TEntity, TDto, TId> : ControllerBase where TEntity : class, new()
     {
-        protected readonly GenericService<TEntity> _service;
+        protected readonly GenericService<TEntity, TId> _service;
 
-        protected BaseController(GenericService<TEntity> service)
+        protected BaseController(GenericService<TEntity, TId> service)
         {
             _service = service;
         }
@@ -29,7 +29,7 @@ namespace API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetByIdAsync(int id)
+        public virtual async Task<IActionResult> GetByIdAsync(TId id)
         {
             try
             {
@@ -46,6 +46,7 @@ namespace API.Controllers
             }
         }
 
+
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
@@ -61,7 +62,7 @@ namespace API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAsync(int id, [FromBody] TDto dto)
+        public async Task<IActionResult> UpdateAsync(TId id, [FromBody] TDto dto)
         {
             try
             {
@@ -84,7 +85,7 @@ namespace API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAsync(int id)
+        public async Task<IActionResult> DeleteAsync(TId id)
         {
             try
             {

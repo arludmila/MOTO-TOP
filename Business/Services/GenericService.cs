@@ -2,11 +2,11 @@
 
 namespace Business.Services
 {
-    public class GenericService<T> where T : class
+    public class GenericService<T, TId> where T : class
     {
-        private readonly GenericRepository<T> _repository;
+        private readonly GenericRepository<T, TId> _repository;
 
-        public GenericService(GenericRepository<T> repository)
+        public GenericService(GenericRepository<T, TId> repository)
         {
             _repository = repository;
         }
@@ -18,7 +18,7 @@ namespace Business.Services
         }
 
         // Read operation (Async) - Get an entity by ID
-        public async Task<T> GetByIdAsync(int id)
+        public async Task<T> GetByIdAsync(TId id)
         {
             return await _repository.GetByIdAsync(id);
         }
@@ -36,7 +36,7 @@ namespace Business.Services
         }
 
         // Delete operation (Async)
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(TId id)
         {
             await _repository.DeleteAsync(id);
         }

@@ -187,7 +187,7 @@ namespace DBSeeders
             var orders = await ApiHelper.GetAsync<Order>("https://localhost:7215/api/orders");
             var orderProductsFaker = new Faker<OrderProductDto>()
                 .RuleFor(x => x.ProductId, f => f.PickRandom(products).Id)
-                 .RuleFor(x => x.OrderId, f => f.PickRandom(orders).Id)
+               //  .RuleFor(x => x.OrderId, f => f.PickRandom(orders).Id)
                  .RuleFor(x => x.Quantity, f => f.Random.Number(1,5))
                  .RuleFor(x => x.Price, f => f.Random.Double(1000,50000));
             for (int i = 0; i < quantity; i++)
