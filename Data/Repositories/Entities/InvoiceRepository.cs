@@ -108,7 +108,7 @@ namespace Data.Repositories.Entities
         {
             var orderProducts = await _context.Set<OrderProduct>()
                 .Include(x => x.Product)
-                .Where(x => x.OrderId == invoice.OrderId).ToListAsync();
+                .Where(x => x.OrderId.Equals(invoice.OrderId)).ToListAsync();
             foreach (var item in orderProducts)
             {
                 item.InvoiceId = invoice.Id;

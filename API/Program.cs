@@ -7,6 +7,8 @@ using Data.Repositories.Entities;
 using Data.Repositories.Relationships;
 using Entities.Core;
 using Entities.Relationships;
+using System.Text.Json.Serialization;
+
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
 
@@ -95,8 +97,8 @@ builder.Services.AddScoped(typeof(GenericRepository<BillingTransaction, int>));
 builder.Services.AddScoped(typeof(GenericService<BillingTransaction, int>));
 
 // Inject GenericRepository and GenericService for OrderProduct
-builder.Services.AddScoped(typeof(GenericRepository<OrderProduct, Guid>));
-builder.Services.AddScoped(typeof(GenericService<OrderProduct, Guid>));
+builder.Services.AddScoped(typeof(GenericRepository<OrderProduct, int>));
+builder.Services.AddScoped(typeof(GenericService<OrderProduct, int>));
 
 // Inject GenericRepository and GenericService for ProductDiscount
 builder.Services.AddScoped(typeof(GenericRepository<ProductDiscount, int>));
@@ -109,7 +111,9 @@ builder.Services.AddScoped(typeof(GenericService<SellerClient, int>));
 // Inject GenericRepository and GenericService for SupplierProduct
 builder.Services.AddScoped(typeof(GenericRepository<SupplierProduct, int>));
 builder.Services.AddScoped(typeof(GenericService<SupplierProduct, int>));
-
+// Inject GenericRepository and GenericService for OffWorker
+builder.Services.AddScoped(typeof(GenericRepository<OfficeWorker, int>));
+builder.Services.AddScoped(typeof(GenericService<OfficeWorker, int>));
 builder.Services.AddScoped<OrderRepository>();
 
 builder.Services.AddScoped<OrderService>();
@@ -126,6 +130,13 @@ builder.Services.AddScoped<SellerRepository>();
 builder.Services.AddScoped<SellerService>();
 builder.Services.AddScoped<SupplierProductRepository>();
 builder.Services.AddScoped<SupplierProductService>();
+builder.Services.AddScoped<OfficeWorkerRepository>();
+builder.Services.AddScoped<OfficeWorkerService>();
+
+builder.Services.AddControllers().AddJsonOptions(x =>
+                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
