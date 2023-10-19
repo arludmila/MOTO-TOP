@@ -3,12 +3,13 @@ using Contracts.DTOs.Entities;
 using Contracts.DTOs.Relationships;
 using Contracts.Utils;
 using Entities.Core;
-using Entities.Relationships;
+using Entities.Enums;
 
 namespace DBSeeders
 {
     public static class Generators
     {
+        // ok
         public static async Task GenerateCategories()
         {
             string[] motorcycleParts = { "Motor", "Neumáticos", "Frenos", "Suspensión", "Escape", "Transmisión", "Faros", "Cadena", "Carburador", "Batería", "Manillar", "Asiento", "Rueda delantera", "Rueda trasera", "Amortiguadores", "Refrigeración", "Embrague", "Encendido", "Filtro de aire", "Carenado" };
@@ -20,7 +21,8 @@ namespace DBSeeders
                 };
                 Console.WriteLine(await ApiHelper.PostAsync("https://localhost:7215/api/categories", category));
             }
-        }
+        } 
+        // no
         public static async Task GenerateProducts(int quantity)
         {
             var categories = await ApiHelper.GetAsync<Category>("https://localhost:7215/api/categories");
@@ -72,6 +74,7 @@ namespace DBSeeders
                 Console.WriteLine(await ApiHelper.PostAsync("https://localhost:7215/api/discounts", discount));
             }
         }
+        // ok
         public static async Task GenerateSellers(int quantity)
         {
             string[] ciudadesCorrientes = {
@@ -82,16 +85,24 @@ namespace DBSeeders
                 "Bella Vista",
                 "Curuzú Cuatiá"
             };
-            var sellers = new Faker<SellerDto>()
-              //  .RuleFor(x => x.Name, f => f.Name.FirstName())
-              //  .RuleFor(x => x.LastName, f => f.Name.LastName())
-                .RuleFor(x => x.Zone, f => f.PickRandom(ciudadesCorrientes));
+
+            var sellers = new Faker<SellerRegisterDto>()
+                .RuleFor(x => x.FirstName, f => f.Name.FirstName())
+                .RuleFor(x => x.LastName, f => f.Name.LastName())
+                .RuleFor(x => x.Zone, f => f.PickRandom(ciudadesCorrientes))
+                .RuleFor(x => x.Email, f => f.Internet.Email()) // Generate a random email
+                .RuleFor(x => x.PasswordHash, f => "your_password_hash_here") // Set a password hash
+                .RuleFor(x => x.DocumentType, f => PersonDocType.DNI) // Set the document type
+                .RuleFor(x => x.DocumentNumber, f => f.Random.Number(10000000, 99999999).ToString()); // Generate a random document number
+
             for (int i = 0; i < quantity; i++)
             {
                 var seller = sellers.Generate();
-                Console.WriteLine(await ApiHelper.PostAsync("https://localhost:7215/api/sellers", seller));
+                seller.Role = Roles.Seller; // Set the Role to 1 (Seller)
+                Console.WriteLine(await ApiHelper.PostAsync("https://localhost:7215/api/sellers/register", seller));
             }
         }
+        // ok
         public static async Task GenerateClients(int quantity)
         {
             string[] ciudadesCorrientes = {
@@ -103,8 +114,11 @@ namespace DBSeeders
                 "Curuzú Cuatiá"
             };
             var clients = new Faker<ClientDto>()
-               // .RuleFor(x => x.Name, f => f.Name.FirstName())
+                .RuleFor(x => x.FirstName, f => f.Name.FirstName())
                 .RuleFor(x => x.LastName, f => f.Name.LastName())
+                .RuleFor(x => x.Email, f => f.Internet.Email())
+                 .RuleFor(x => x.DocumentType, f => PersonDocType.DNI) // Set the document type
+                .RuleFor(x => x.DocumentNumber, f => f.Random.Number(10000000, 99999999).ToString())
                 .RuleFor(x => x.Location, f => f.PickRandom(ciudadesCorrientes) + ", " + f.Address.StreetAddress())
                 .RuleFor(x => x.PhoneNumber, f => f.Phone.PhoneNumberFormat(12));
             for (int i = 0; i < quantity; i++)
@@ -113,6 +127,7 @@ namespace DBSeeders
                 Console.WriteLine(await ApiHelper.PostAsync("https://localhost:7215/api/clients", client));
             }
         }
+        // ok
         public static async Task GenerateTransportCompanies()
         {
             string[] companyNames = {
@@ -142,7 +157,8 @@ namespace DBSeeders
                 TransportCompanyDto transportCompany = new TransportCompanyDto
                 {
                     Name = companyName,
-                    PhoneNumber = phoneNumber
+                    PhoneNumber = phoneNumber,
+                    Email = $"{companyName.Replace(" ", "").ToLower()}@example.com",
                 };
 
                 // Llamar a la API para agregar la empresa de transporte
@@ -172,12 +188,12 @@ namespace DBSeeders
                .RuleFor(x => x.ClientId, f => f.PickRandom(clients).Id)
                .RuleFor(x => x.SellerId, f => f.PickRandom(sellers).Id)
                .RuleFor(x => x.TransportCompanyId, f => f.PickRandom(transportCompanies).Id);
-       //        .RuleFor(x => x.DateSent, f => f.Date.Past());
+            //        .RuleFor(x => x.DateSent, f => f.Date.Past());
             for (int i = 0; i < quantity; i++)
             {
                 var order = ordersFaker.Generate();
-            //    order.ShipmentStatus = Entities.Enums.ShipmentStatuses.Shipped;
-              //  order.DateReceived = order.DateSent.AddDays(3);
+                //    order.ShipmentStatus = Entities.Enums.ShipmentStatuses.Shipped;
+                //  order.DateReceived = order.DateSent.AddDays(3);
                 Console.WriteLine(await ApiHelper.PostAsync("https://localhost:7215/api/orders", order));
             }
         }
@@ -187,9 +203,9 @@ namespace DBSeeders
             var orders = await ApiHelper.GetAsync<Order>("https://localhost:7215/api/orders");
             var orderProductsFaker = new Faker<OrderProductDto>()
                 .RuleFor(x => x.ProductId, f => f.PickRandom(products).Id)
-               //  .RuleFor(x => x.OrderId, f => f.PickRandom(orders).Id)
-                 .RuleFor(x => x.Quantity, f => f.Random.Number(1,5))
-                 .RuleFor(x => x.Price, f => f.Random.Double(1000,50000));
+                 //  .RuleFor(x => x.OrderId, f => f.PickRandom(orders).Id)
+                 .RuleFor(x => x.Quantity, f => f.Random.Number(1, 5))
+                 .RuleFor(x => x.Price, f => f.Random.Double(1000, 50000));
             for (int i = 0; i < quantity; i++)
             {
                 var orderProduct = orderProductsFaker.Generate();
