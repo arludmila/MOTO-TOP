@@ -8,12 +8,12 @@
     }
     public enum PaymentMethods
     {
-        None,
-        Cash,
-        CreditCard,
-        DebitCard,
-        BankTransfer,
-        Check
+        Ninguno,
+        Efectivo,
+        TarjetaDeCredito,
+        TarjetaDeDebito,
+        TransferenciaBancaria,
+        Cheque
     }
     public enum Roles
     {

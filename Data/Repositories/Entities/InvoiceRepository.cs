@@ -99,7 +99,7 @@ namespace Data.Repositories.Entities
                 InvoiceId = invoice.Id,
                 ClientId = invoice.ClientId,
                 DocumentNumber = invoice.Id,
-                DocumentType = "Invoice"
+                DocumentType = "Factura"
             };
             _context.Set<BillingTransaction>().Add(billingTransaction);
             await _context.SaveChangesAsync();
