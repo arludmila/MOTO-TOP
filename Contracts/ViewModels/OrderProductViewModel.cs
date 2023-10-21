@@ -9,6 +9,7 @@ namespace Contracts.ViewModels
 {
     public class OrderProductViewModel
     {
+        public int Id { get; set; }
         public int ProductId { get; set; }
         public Guid? OrderId { get; set; }
         public int? InvoiceId { get; set; }

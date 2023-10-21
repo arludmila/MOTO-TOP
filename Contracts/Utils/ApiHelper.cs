@@ -108,6 +108,33 @@ namespace Contracts.Utils
                 return default(T); // You can handle this error case as needed
             }
         }
+        public static async Task<string> UpdateAsync(string url, object objectToUpdate)
+        {
+            try
+            {
+                var jsonContent = JsonConvert.SerializeObject(objectToUpdate);
+                var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PutAsync(url, content); // Assuming you want to use the HTTP PUT method for updates.
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return await response.Content.ReadAsStringAsync();
+                }
+                else
+                {
+                    // Operation failed
+                    string errorMessage = "Update operation failed. Status code: " + response.StatusCode;
+                    return errorMessage;
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle the exception appropriately, e.g., log it or return an error message.
+                string errorMessage = "An error occurred during the update: " + ex.Message;
+                return errorMessage;
+            }
+        }
+
         public static async Task<string> DeleteAsync(string url)
         {
             try
