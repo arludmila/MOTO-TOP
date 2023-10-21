@@ -105,6 +105,7 @@ namespace Data.Repositories.Entities
             {
                 var orderProductVM = new OrderProductViewModel()
                 {
+                    Id = item.Id,
                     ProductId = item.ProductId,
                     OrderId = item.OrderId,
                     InvoiceId = item.InvoiceId,
