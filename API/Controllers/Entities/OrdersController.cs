@@ -2,6 +2,7 @@
 using Contracts.DTOs.Entities;
 using Contracts.Utils;
 using Contracts.ViewModels;
+using Data.Repositories.Entities;
 using Entities.Core;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,6 +17,11 @@ namespace API.Controllers.Entities
         public OrdersController(OrderService service) : base(service)
         {
             _orderService = service;
+        }
+        [HttpPost("detailed")]
+        public async Task<Order> CreateDetailedOrderAsync(OrderWithDetailsDto dto)
+        {
+            return await _orderService.CreateDetailedOrderAsync(dto);
         }
         [HttpPost]
         public override async Task<IActionResult> CreateAsync([FromBody] OrderDto dto)

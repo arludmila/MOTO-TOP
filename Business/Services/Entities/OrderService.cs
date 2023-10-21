@@ -1,4 +1,5 @@
-﻿using Contracts.ViewModels;
+﻿using Contracts.DTOs.Entities;
+using Contracts.ViewModels;
 using Data.Repositories;
 using Data.Repositories.Entities;
 using Entities.Core;
@@ -30,6 +31,10 @@ namespace Business.Services.Entities
         public async Task<ShipmentStatuses> GetOrderStatusAsync(Guid id)
         {
             return await _orderRepository.GetOrderStatusAsync(id);
+        }
+        public async Task<Order> CreateDetailedOrderAsync(OrderWithDetailsDto dto)
+        {
+            return await _orderRepository.CreateDetailedOrderAsync(dto);
         }
     }
 }

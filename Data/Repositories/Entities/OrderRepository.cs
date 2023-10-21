@@ -1,4 +1,5 @@
-﻿using Contracts.ViewModels;
+﻿using Contracts.DTOs.Entities;
+using Contracts.ViewModels;
 using Entities.Core;
 using Entities.Enums;
 using Entities.Relationships;
@@ -163,5 +164,38 @@ namespace Data.Repositories.Entities
             var order = await _context.Orders.FirstOrDefaultAsync(x => x.Id.Equals(id));
             return order.ShipmentStatus;
         }
+        //
+        public async Task<Order> CreateDetailedOrderAsync(OrderWithDetailsDto dto)
+        {
+            var order = new Order()
+            {
+                Date = dto.Date,
+                ClientId = dto.ClientId,
+                TransportCompanyId = dto.TransportCompanyId,
+                SellerId = dto.SellerId,
+                ShipmentStatus = ShipmentStatuses.Received,
+                HasInvoice = false,
+            };
+            _context.Set<Order>().Add(order);
+            await _context.SaveChangesAsync();
+
+            foreach (var item in dto.OrderDetails)
+            {
+                var orderProduct = new OrderProduct()
+                {
+                    ProductId = item.ProductId,
+                    OrderId = order.Id,
+                    Quantity = item.Quantity,
+                    Price = item.Price,
+                };
+                _context.Set<OrderProduct>().Add(orderProduct);
+                await _context.SaveChangesAsync();
+            }
+
+            await _context.SaveChangesAsync();
+            return order;
+        }
+        
+       
     }
 }

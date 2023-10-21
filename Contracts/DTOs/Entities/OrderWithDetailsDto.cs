@@ -1,5 +1,4 @@
 ﻿using Contracts.DTOs.Relationships;
-using Entities.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Contracts.DTOs.Entities
 {
-    public class InvoiceWithDetailsDto
+    public class OrderWithDetailsDto
     {
         public DateTime Date { get; set; }
-        public double Amount { get; set; }
+        public int TransportCompanyId { get; set; }
         public int ClientId { get; set; }
-        public int? OfficeWorkerId { get; set; }
-        public List<OrderProductDto> InvoiceDetails { get; set; } = new List<OrderProductDto>();
+        public int SellerId { get; set; }
+        public List<OrderProductDto> OrderDetails { get; set; } = new List<OrderProductDto>();
     }
 }
