@@ -20,6 +20,7 @@ builder.Services.AddCors(options =>
                       policy =>
                       {
                           policy.WithOrigins("https://localhost:7224");
+                          policy.WithOrigins("https://localhost:7236");
                       });
 });
 builder.Services.AddControllers();
