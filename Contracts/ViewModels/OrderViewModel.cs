@@ -26,6 +26,7 @@ namespace Contracts.ViewModels
     public class OrderViewModel
     {
         public Guid Id { get; set; }
+        public DateTime Date { get; set; }
         public string ShipmentStatus { get; set; }
         public string ClientName { get; set; }
         public string SellerName { get; set; }

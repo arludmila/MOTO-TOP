@@ -39,6 +39,7 @@ namespace Data.Repositories.Entities
                     var orderProductVM = new OrderProductViewModel()
                     {
                         Id = item.Id,
+                        
                         ProductId = item.ProductId,
                         OrderId = item.OrderId,
                         InvoiceId = item.InvoiceId,
@@ -71,6 +72,7 @@ namespace Data.Repositories.Entities
                 var orderVM = new OrderViewModel
                 {
                     Id = order.Id,
+                    Date = order.Date,
                     ShipmentStatus = shipmentStatus,
                     ClientName = $"{order.Client.LastName}, {order.Client.FirstName}",
                     SellerName = $"{order.Seller.User.LastName}, {order.Seller.User.FirstName}",
@@ -136,6 +138,7 @@ namespace Data.Repositories.Entities
             var orderVM = new OrderViewModel
             {
                 Id = order.Id,
+                Date = order.Date,
                 ShipmentStatus = shipmentStatus,
                 ClientName = $"{order.Client.LastName}, {order.Client.FirstName}",
                 SellerName = $"{order.Seller.User.LastName}, {order.Seller.User.FirstName}",
