@@ -17,7 +17,7 @@ namespace Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
 
-            optionsBuilder.UseSqlServer("Server=.;Database=mototop;Trusted_Connection=True;MultipleActiveResultSets=True;TrustServerCertificate=True");
+            optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=mototop;Trusted_Connection=True;MultipleActiveResultSets=True;TrustServerCertificate=True");
 
 
         }
