@@ -12,9 +12,9 @@ namespace Entities.Core
         public DateTime DateReceived { get; set; }
         public int ClientId { get; set; }
         public int SellerId { get; set; }
-        public int TransportCompanyId { get; set; }
+        public int? TransportCompanyId { get; set; }
         public bool HasInvoice { get; set; }
-        public TransportCompany TransportCompany { get; set; }
+        public TransportCompany? TransportCompany { get; set; }
         public Client Client { get; set; }
         public Seller Seller { get; set; }
         public List<OrderProduct> OrderProducts { get; set; } = new List<OrderProduct>();

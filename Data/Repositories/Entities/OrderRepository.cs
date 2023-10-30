@@ -76,13 +76,15 @@ namespace Data.Repositories.Entities
                     ShipmentStatus = shipmentStatus,
                     ClientName = $"{order.Client.LastName}, {order.Client.FirstName}",
                     SellerName = $"{order.Seller.User.LastName}, {order.Seller.User.FirstName}",
-                    TransportCompanyName = $"{order.TransportCompany.Name}",
                     DateSent = order.DateSent,
                     DateReceived = order.DateReceived,
                     HasInvoice = order.HasInvoice,
                     OrderProducts = orderProductResult,
                 };
-
+                if (order.TransportCompany != null)
+                {
+                    orderVM.TransportCompanyName = $"{order.TransportCompany.Name}";
+                }
                 result.Add(orderVM);
             }
 
@@ -142,12 +144,16 @@ namespace Data.Repositories.Entities
                 ShipmentStatus = shipmentStatus,
                 ClientName = $"{order.Client.LastName}, {order.Client.FirstName}",
                 SellerName = $"{order.Seller.User.LastName}, {order.Seller.User.FirstName}",
-                TransportCompanyName = $"{order.TransportCompany.Name}",
+                
                 DateSent = order.DateSent,
                 DateReceived = order.DateReceived,
                 HasInvoice = order.HasInvoice,
                 OrderProducts = result,
             };
+            if (order.TransportCompany != null)
+            {
+                orderVM.TransportCompanyName = $"{order.TransportCompany.Name}";
+            }
             return orderVM;
         }
         public async Task<double> GetOrderTotalAsync(Guid id)

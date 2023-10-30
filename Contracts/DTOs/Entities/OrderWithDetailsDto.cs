@@ -10,7 +10,7 @@ namespace Contracts.DTOs.Entities
     public class OrderWithDetailsDto
     {
         public DateTime Date { get; set; }
-        public int TransportCompanyId { get; set; }
+        public int? TransportCompanyId { get; set; }
         public int ClientId { get; set; }
         public int SellerId { get; set; }
         public List<OrderProductDto> OrderDetails { get; set; } = new List<OrderProductDto>();
