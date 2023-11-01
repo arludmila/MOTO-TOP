@@ -3,6 +3,7 @@ using Contracts.DTOs.Reports;
 using Contracts.ViewModels;
 using Contracts.ViewModels.Reports;
 using Data.Repositories;
+using Entities.Core;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,7 +20,7 @@ namespace API.Controllers
             _service = service;
         }
         [HttpPost("sellers-sales")]
-        public List<SellersSalesViewModel> GetSellersSales(SellersSalesDto dto)
+        public List<SellersSalesViewModel> GetSellersSales(DateFromToDto dto)
         {
             return _service.GetSellersSales(dto);
         }
@@ -32,6 +33,17 @@ namespace API.Controllers
         public async Task<List<ClientsBalanceViewModel>> GetClientsBlances()
         {
             return await _service.GetClientsBlances();
+        }
+
+        [HttpPost("total-sales")]
+        public async Task<List<Invoice>> GetTotalSales(DateFromToDto dto)
+        {
+            return await _service.GetTotalSales(dto);
+        }
+        [HttpPost("clients-purchases")]
+        public async Task<List<ClientPurchasesViewModel>> GetClientsPurchases(DateFromToDto dto)
+        {
+            return await _service.GetClientsPurchases(dto);
         }
     }
 }

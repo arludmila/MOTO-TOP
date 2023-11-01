@@ -2,6 +2,8 @@
 using Contracts.ViewModels;
 using Contracts.ViewModels.Reports;
 using Data.Repositories;
+using Entities.Core;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +20,7 @@ namespace Business.Services
         {
             _repository = repository;
         }
-        public List<SellersSalesViewModel> GetSellersSales(SellersSalesDto dto)
+        public List<SellersSalesViewModel> GetSellersSales(DateFromToDto dto)
         {
             return _repository.GetSellersSales(dto);
         }
@@ -29,6 +31,16 @@ namespace Business.Services
         public async Task<List<ClientsBalanceViewModel>> GetClientsBlances()
         {
             return await _repository.GetClientsBlances();
+        }
+        // Informe de Total de ventas en un periodo;
+        public async Task<List<Invoice>> GetTotalSales(DateFromToDto dto)
+        {
+            return await _repository.GetTotalSales(dto);
+        }
+        // informe total de compras x clientes;
+        public async Task<List<ClientPurchasesViewModel>> GetClientsPurchases(DateFromToDto dto)
+        {
+            return await _repository.GetClientsPurchases(dto);
         }
     }
 }

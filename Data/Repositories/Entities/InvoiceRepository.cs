@@ -17,6 +17,7 @@ namespace Data.Repositories.Entities
         {
             var invoices = await _context.Set<Invoice>()
                 .Include(x => x.Order)
+                .Include(x => x.Client)
                 .ToListAsync();
             var billingTransactions = await _context.Set<BillingTransaction>()
                 .ToListAsync();
@@ -39,6 +40,8 @@ namespace Data.Repositories.Entities
                     TotalAmount = invoice.Amount,
                     DebtAmount = payedAmount,
                     ClientId = invoice.ClientId,
+                    ClientDocument = $"{invoice.Client.DocumentType}: {invoice.Client.DocumentNumber}",
+                    ClientName = $"{invoice.Client.LastName}, {invoice.Client.FirstName}",
                 };
                 result.Add(invoiceVM);
             }

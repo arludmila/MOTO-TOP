@@ -23,7 +23,7 @@ namespace Data.Repositories
         {
             _context = context;
         }
-        public List<SellersSalesViewModel> GetSellersSales(SellersSalesDto dto)
+        public List<SellersSalesViewModel> GetSellersSales(DateFromToDto dto)
         {
             var result = _context.Invoices
                 .Include(i => i.Order)
@@ -106,8 +106,41 @@ namespace Data.Repositories
                      })
                      .ToListAsync();
             return clientBalances;
-            // TODO: Informe de Total de ventas en un periodo ;  Facturar pendientes de cobro
+           
+
 
         }
+        // Informe de Total de ventas en un periodo;
+        public async Task<List<Invoice>> GetTotalSales(DateFromToDto dto)
+        {
+            var invoices = await _context.Set<Invoice>()
+                .Where(i => i.Date >= dto.From && i.Date <= dto.To)
+                .ToListAsync();
+                     
+            return invoices;
+
+        }
+        // informe total de compras x clientes;
+        public async Task<List<ClientPurchasesViewModel>> GetClientsPurchases(DateFromToDto dto)
+        {
+            var result = _context.Set<Invoice>()
+                .Include(i => i.Client)
+                .GroupBy(i => i.ClientId)
+                .Select(grouped => new ClientPurchasesViewModel
+                {
+                    ClientId = grouped.Key,
+                    FirstName = grouped.First().Client.FirstName,
+                    LastName = grouped.First().Client.LastName,
+                    DocumentType = grouped.First().Client.DocumentType.ToString(),
+                    DocumentNumber = grouped.First().Client.DocumentNumber,
+                    Email = grouped.First().Client.Email,
+                    PhoneNumber = grouped.First().Client.PhoneNumber,
+                    TotalAmount = grouped.Sum(i => i.Amount),
+                    TotalPurchases = grouped.Count(),
+                }).ToList();
+            return result;
+        }
+        // TODO: ventas de productos x periodo;
+
     }
 }

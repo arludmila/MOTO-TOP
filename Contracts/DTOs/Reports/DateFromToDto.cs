@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Contracts.DTOs.Reports
 {
-    public class SellersSalesDto
+    public class DateFromToDto
     {
         public DateTime From { get; set; }
         public DateTime To { get; set; }
