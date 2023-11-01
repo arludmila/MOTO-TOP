@@ -3,6 +3,7 @@ using Entities.Enums;
 using Entities.Relationships;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Data
 {
@@ -17,9 +18,11 @@ namespace Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
 
-            optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=mototop;Trusted_Connection=True;MultipleActiveResultSets=True;TrustServerCertificate=True");
 
 
+        }
+        public void ConfigureServices(IServiceCollection services)
+        {
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

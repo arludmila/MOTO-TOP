@@ -69,15 +69,21 @@ namespace Data.Repositories
             foreach (var order in orders)
             {
                 // TODO: revisar -> deje como nulo datesent, datereceived y hasinvoice!!!
-                result.Add(new OrderViewModel()
+                var orderVM= new OrderViewModel()
                 {
                     Id = order.Id,
                     Date = order.Date,
                     ShipmentStatus = order.ShipmentStatus.ToString(),
                     ClientName = $"{order.Client.LastName}, {order.Client.FirstName}",
                     SellerName = $"{order.Seller.User.LastName}, {order.Seller.User.FirstName}",
-                    TransportCompanyName = order.TransportCompany.Name,
-                });
+                    
+                };
+                if (orderVM.TransportCompanyName != null)
+                {
+                    orderVM.TransportCompanyName = order.TransportCompany.Name;
+                }
+                result.Add(orderVM);
+
             }
 
             return result;

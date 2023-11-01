@@ -7,6 +7,8 @@ using Data.Repositories.Entities;
 using Data.Repositories.Relationships;
 using Entities.Core;
 using Entities.Relationships;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System.Text.Json.Serialization;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
@@ -35,7 +37,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 // DI
-builder.Services.AddDbContext<MotoTopContext>();
+builder.Services.AddDbContext<MotoTopContext>(options =>
+                    options.UseSqlServer(builder.Configuration.GetConnectionString("MotoTopDatabase")
+                    ));
 //// Define an array of types you want to use
 //Type[] entityTypes = new Type[]
 //{
