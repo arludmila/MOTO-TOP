@@ -3,6 +3,7 @@ using Contracts.ViewModels;
 using Contracts.ViewModels.Reports;
 using Entities.Core;
 using Entities.Enums;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections;
@@ -24,37 +25,34 @@ namespace Data.Repositories
         }
         public List<SellersSalesViewModel> GetSellersSales(SellersSalesDto dto)
         {
-            // sellerId, salesAmount
-            var sumSales = _context.Set<Order>()
-                .Include(order => order.Seller)
-                    .ThenInclude(seller => seller.User)
-                .Where(order => order.Date >= dto.From && order.Date <= dto.To && order.HasInvoice)
-                .GroupBy(order => order.Seller)
-                .Select(group => new
+            var result = _context.Invoices
+                .Include(i => i.Order)
+                    .ThenInclude(o => o.Seller)
+                     .ThenInclude(s => s.User)
+                .Where(i => i.Order != null)
+                .GroupBy(i => i.Order.SellerId)
+                .Select(grouped => new SellersSalesViewModel
                 {
-                    SellerId = group.Key.Id,
-                    SalesAmount = group.Count()
-                })
-                .ToDictionary(result => result.SellerId, result => result.SalesAmount);
-
-            var sellers = _context.Set<Seller>()
-                .Include(seller => seller.User)
-                .ToList(); 
-
-            var result = sellers
-                .Where(seller => sumSales.ContainsKey(seller.Id)) 
-                .Select(seller => new SellersSalesViewModel
-                {
-                    SellerId = seller.Id,
-                    FirstName = seller.User.FirstName,
-                    LastName = seller.User.LastName,
-                    Zone = seller.Zone,
-                    TotalSales = sumSales[seller.Id]
+                    SellerId = grouped.Key,
+                    FirstName = grouped.First().Order.Seller.User.FirstName,
+                    LastName = grouped.First().Order.Seller.User.LastName,
+                    Zone = grouped.First().Order.Seller.Zone,
+                    TotalSales = grouped.Count(),
+                    TotalAmount = grouped.Sum(i => i.Amount)
                 })
                 .ToList();
 
             return result;
         }
+
+
+
+
+
+
+
+
+
         public async Task<List<OrderViewModel>> GetOrdersPendingShipment()
         {
             var orders = await _context.Set<Order>()
@@ -109,6 +107,7 @@ namespace Data.Repositories
                      .ToListAsync();
             return clientBalances;
             // TODO: Informe de Total de ventas en un periodo ;  Facturar pendientes de cobro
+
         }
     }
 }

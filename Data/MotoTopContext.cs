@@ -4,6 +4,7 @@ using Entities.Relationships;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace Data
 {
@@ -17,7 +18,7 @@ namespace Data
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-
+            optionsBuilder.UseSqlServer("workstation id=mototop.mssql.somee.com;packet size=4096;user id=arludmila_SQLLogin_1;pwd=78nbwtgekf;data source=mototop.mssql.somee.com;persist security info=False;initial catalog=mototop;encrypt=true;TrustServerCertificate=true;");
 
 
         }
@@ -30,8 +31,7 @@ namespace Data
             // claves compuestas
             modelBuilder.Entity<ProductDiscount>()
               .HasKey(p => new { p.ProductId, p.ProductDiscountId });
-            modelBuilder.Entity<SellerClient>()
-             .HasKey(svc => new { svc.SellerId, svc.ClientId });
+           
             // enums a string
             modelBuilder
                 .Entity<Order>()
