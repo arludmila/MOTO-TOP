@@ -1,36 +1,37 @@
-﻿using Data.Repositories;
+﻿using Contracts.Utils;
+using Data.Repositories;
 
 namespace Business.Services
 {
-    public class GenericService<T, TId> where T : class
+    public class GenericService<TEntity, TDto, TId> where TEntity : class, new()
     {
-        private readonly GenericRepository<T, TId> _repository;
+        private readonly GenericRepository<TEntity, TId> _repository;
 
-        public GenericService(GenericRepository<T, TId> repository)
+        public GenericService(GenericRepository<TEntity, TId> repository)
         {
             _repository = repository;
         }
 
         // Create operation (Async)
-        public virtual async Task<T> CreateAsync(T entity)
+        public virtual async Task<TEntity> CreateAsync(TDto dto)
         {
-            return await _repository.CreateInvoiceAsync(entity);
+            return await _repository.CreateInvoiceAsync(DtoMapper.CreateEntityFromDto<TEntity>(dto));
         }
 
         // Read operation (Async) - Get an entity by ID
-        public async Task<T> GetByIdAsync(TId id)
+        public async Task<TEntity> GetByIdAsync(TId id)
         {
             return await _repository.GetByIdAsync(id);
         }
 
         // Read operation (Async) - Get all entities
-        public async Task<List<T>> GetAllAsync()
+        public async Task<List<TEntity>> GetAllAsync()
         {
             return await _repository.GetAllAsync();
         }
 
         // Update operation (Async)
-        public async Task<T> UpdateAsync(T entity)
+        public async Task<TEntity> UpdateAsync(TEntity entity)
         {
             return await _repository.UpdateAsync(entity);
         }

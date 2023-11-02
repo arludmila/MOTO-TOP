@@ -1,6 +1,7 @@
-﻿using Data.Repositories.Entities;
+﻿using Contracts.DTOs.Entities;
+using Data.Repositories.Entities;
 using Entities.Core;
-using Microsoft.EntityFrameworkCore;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Business.Services.Entities
 {
-    public class BillingTransactionService : GenericService<BillingTransaction, int>
+    public class BillingTransactionService : GenericService<BillingTransaction, BillingTransactionDto, int>
     {
         private readonly BillingTransactionRepository _btRepository;
 

@@ -1,4 +1,5 @@
-﻿using Contracts.ViewModels;
+﻿using Contracts.DTOs.Entities;
+using Contracts.ViewModels;
 using Data.Repositories.Entities;
 using Entities.Core;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Business.Services.Entities
 {
-    public class ProductService : GenericService<Product, int>
+    public class ProductService : GenericService<Product, ProductDto, int>
     {
         private readonly ProductRepository _productRepository;
 

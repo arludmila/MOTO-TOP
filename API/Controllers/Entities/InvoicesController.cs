@@ -27,19 +27,19 @@ namespace API.Controllers.Entities
         {
             return await _invoiceService.GetAllVMAsync();
         }
-        [HttpPost]
-        public override async Task<IActionResult> CreateAsync([FromBody] InvoiceDto dto)
-        {
-            try
-            {
-                var createdEntity = await _invoiceService.CreateInvoiceAsync(DtoMapper.CreateEntityFromDto<Invoice>(dto));
-                return Ok(createdEntity);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: {ex.Message} \nInner Exception: {ex.InnerException}");
-            }
-        }
+        //[HttpPost]
+        //public override async Task<IActionResult> CreateAsync([FromBody] InvoiceDto dto)
+        //{
+        //    try
+        //    {
+        //       var createdEntity = await _invoiceService.CreateInvoiceAsync(DtoMapper.CreateEntityFromDto<Invoice>(dto));
+        //       return Ok(createdEntity);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, $"Internal server error: {ex.Message} \nInner Exception: {ex.InnerException}");
+        //    }
+        //}
         [HttpGet("orderHasInvoice/{orderId}")]
         public async Task<bool> OrderHasInvoice(int orderId)
         {

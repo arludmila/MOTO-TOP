@@ -1,4 +1,6 @@
-﻿using Data.Repositories.Entities;
+﻿using Contracts.DTOs.Relationships;
+using Contracts.Utils;
+using Data.Repositories.Entities;
 using Data.Repositories.Relationships;
 using Entities.Core;
 using Entities.Relationships;
@@ -10,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Business.Services.Relationships
 {
-    public class SupplierProductService : GenericService<SupplierProduct, int>
+    public class SupplierProductService : GenericService<SupplierProduct, SupplierProductDto, int>
     {
         private readonly SupplierProductRepository _supplierProductRepository;
 
@@ -18,9 +20,9 @@ namespace Business.Services.Relationships
         {
             _supplierProductRepository = repository;
         }
-        public async Task<SupplierProduct> CreateSuppProdAsync(SupplierProduct supplierProduct)
+        public async Task<SupplierProduct> CreateSuppProdAsync(SupplierProductDto dto)
         {
-            return await _supplierProductRepository.CreateSuppProdAsync(supplierProduct);
+            return await _supplierProductRepository.CreateSuppProdAsync(DtoMapper.CreateEntityFromDto<SupplierProduct>(dto));
         }
     }
 }

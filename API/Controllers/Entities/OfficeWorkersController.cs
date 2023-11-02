@@ -2,6 +2,8 @@
 using Contracts.DTOs.Entities;
 using Contracts.Utils;
 using Contracts.ViewModels;
+using Data;
+using Data.Repositories.Entities;
 using Entities.Core;
 using Entities.Enums;
 using Microsoft.AspNetCore.Http;
@@ -35,6 +37,12 @@ namespace API.Controllers.Entities
                 DocumentType = registerDto.DocumentType,
                 Role = Roles.OfficeWorker,
             };
+            // TODO: mirar!!!
+            var context = new MotoTopContext();
+            var userRepository = new UserRepository(context);
+            var userService = new UserService(userRepository);
+            //
+            userService.base
             var response = await ApiHelper.PostAsync("https://localhost:7215/api/users", userDto);
             User user = JsonConvert.DeserializeObject<User>(response);
             var sellerDto = new OfficeWorkerDto()

@@ -1,4 +1,5 @@
 ﻿using Contracts.DTOs.Entities;
+using Contracts.Utils;
 using Contracts.ViewModels;
 using Data;
 using Data.Repositories;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Business.Services.Entities
 {
-    public class InvoiceService : GenericService<Invoice, int>
+    public class InvoiceService : GenericService<Invoice, InvoiceDto, int>
     {
         private readonly InvoiceRepository _invoiceRepository;
 
@@ -29,9 +30,9 @@ namespace Business.Services.Entities
         {
             return await _invoiceRepository.GetAllVMAsync();
         }
-        public async Task<Invoice> CreateInvoiceAsync(Invoice invoice)
+        public async Task<Invoice> CreateInvoiceAsync(InvoiceDto dto)
         {
-            return await _invoiceRepository.CreateInvoiceAsync(invoice);
+            return await _invoiceRepository.CreateInvoiceAsync(DtoMapper.CreateEntityFromDto<Invoice>(dto));
         }
         public async Task<bool> OrderHasInvoiceAsync(int orderId)
         {
