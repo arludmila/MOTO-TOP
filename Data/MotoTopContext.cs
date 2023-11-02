@@ -18,8 +18,11 @@ namespace Data
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            
 
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer("MotoTopDatabase");
+            }
 
         }
         public void ConfigureServices(IServiceCollection services)
