@@ -23,6 +23,7 @@ builder.Services.AddCors(options =>
                       {
                           policy.WithOrigins("https://localhost:7224");
                           policy.WithOrigins("https://localhost:7236");
+                          policy.WithOrigins("https://localhost:7021");
                       });
 });
 builder.Services.AddCors(options =>
@@ -164,7 +165,11 @@ app.UseCors("AllowEmulator");
 app.UseHttpsRedirection();
 app.UseCors(MyAllowSpecificOrigins);
 app.UseAuthorization();
-
+app.UseCors(x => x
+    .AllowAnyMethod()
+    .AllowAnyHeader()
+    .SetIsOriginAllowed(origin => true) // allow any origin  
+    .AllowCredentials());
 app.MapControllers();
 
 app.Run();
