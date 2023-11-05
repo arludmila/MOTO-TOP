@@ -3,6 +3,7 @@ using Contracts.ViewModels;
 using Contracts.ViewModels.Reports;
 using Entities.Core;
 using Entities.Enums;
+using Entities.Relationships;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -141,6 +142,23 @@ namespace Data.Repositories
             return result;
         }
         // TODO: ventas de productos x periodo;
+        public async Task<List<ProductSalesViewModel>> GetProductsSales(DateFromToDto dto)
+        {
+            var result = _context.Set<OrderProduct>()
+                .Include(op => op.Product)
+                    .ThenInclude(p => p.Category)
 
+                .GroupBy(p => p.ProductId)
+                .Select(grouped => new ProductSalesViewModel
+                {
+                    Id = grouped.Key,
+                    Name = grouped.First().Product.Name,
+                    CategoryName = grouped.First().Product.Category.Name,
+                    Description = grouped.First().Product.Description,
+                    TotalAmount = grouped.Sum(p => p.Price),
+                    TotalSales = grouped.Sum(p => p.Quantity),
+                }).ToList();
+            return result;
+        }
     }
 }

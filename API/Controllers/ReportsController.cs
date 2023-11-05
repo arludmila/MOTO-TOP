@@ -45,5 +45,10 @@ namespace API.Controllers
         {
             return await _service.GetClientsPurchases(dto);
         }
+        [HttpPost("products-sales")]
+        public async Task<List<ProductSalesViewModel>> GetProductsSales(DateFromToDto dto)
+        {
+            return await _service.GetProductsSales(dto);
+        }
     }
 }

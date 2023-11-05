@@ -85,3 +85,14 @@ namespace Data
         public DbSet<SupplierProduct> SupplierProducts { get; set; }
     }
 }
+
+
+
+
+
+
+
+
+
+
+

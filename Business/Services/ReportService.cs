@@ -3,6 +3,7 @@ using Contracts.ViewModels;
 using Contracts.ViewModels.Reports;
 using Data.Repositories;
 using Entities.Core;
+using Entities.Relationships;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -41,6 +42,11 @@ namespace Business.Services
         public async Task<List<ClientPurchasesViewModel>> GetClientsPurchases(DateFromToDto dto)
         {
             return await _repository.GetClientsPurchases(dto);
+        }
+        //
+        public async Task<List<ProductSalesViewModel>> GetProductsSales(DateFromToDto dto)
+        {
+            return await _repository.GetProductsSales(dto);
         }
     }
 }
