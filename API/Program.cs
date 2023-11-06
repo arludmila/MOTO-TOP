@@ -148,6 +148,8 @@ builder.Services.AddScoped<OfficeWorkerService>();
 builder.Services.AddScoped<ReportRepository>();
 builder.Services.AddScoped<ReportService>();
 
+builder.Services.AddScoped<LoginRepository>();
+builder.Services.AddScoped<LoginService>();
 
 builder.Services.AddControllers().AddJsonOptions(x =>
                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);

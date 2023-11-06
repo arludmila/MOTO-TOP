@@ -9,6 +9,7 @@ namespace API.Controllers.Relationships
     [ApiController]
     public class SellerClientsController : BaseController<SellerClient, SellerClientDto, int>
     {
+
         public SellerClientsController(GenericService<SellerClient, int> service)
             : base(service)
         {
