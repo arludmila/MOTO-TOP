@@ -36,5 +36,9 @@ namespace Business.Services.Entities
         {
             return await _orderRepository.CreateDetailedOrderAsync(dto);
         }
+        public async Task<List<OrderViewModel>> GetSellerOrdersAsync(int id)
+        {
+            return await _orderRepository.GetSellerOrdersAsync(id);
+        }
     }
 }

@@ -57,5 +57,10 @@ namespace API.Controllers.Entities
         {
             return (await _orderService.GetOrderStatusAsync(orderId)).ToString();
         }
+        [HttpGet("getSellerOrders/{sellerId}")]
+        public async Task<List<OrderViewModel>> GetSellerOrdersAsync(int sellerId)
+        {
+            return await _orderService.GetSellerOrdersAsync(sellerId);
+        }
     }
 }

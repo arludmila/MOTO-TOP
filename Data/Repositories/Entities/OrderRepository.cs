@@ -206,7 +206,83 @@ namespace Data.Repositories.Entities
             await _context.SaveChangesAsync();
             return order;
         }
-        
-       
+        public async Task<List<OrderViewModel>> GetSellerOrdersAsync(int id)
+        {
+            var orders = await _context.Set<Order>()
+                .Include(x => x.Seller)
+                    .ThenInclude(seller => seller.User)
+                .Include(x => x.Client)
+                .Where(o => o.SellerId == id)
+                .ToListAsync();
+            List<OrderViewModel> result = new List<OrderViewModel>();
+
+            foreach (var order in orders)
+            {
+                var orderDetails = await _context.Set<OrderProduct>()
+                    .Include(x => x.Product)
+                        .ThenInclude(product => product.Category)
+                    .Where(x => x.OrderId.Equals(order.Id))
+                    .ToListAsync();
+
+                List<OrderProductViewModel> orderProductResult = new List<OrderProductViewModel>();
+
+                foreach (var item in orderDetails)
+                {
+                    var orderProductVM = new OrderProductViewModel()
+                    {
+                        Id = item.Id,
+
+                        ProductId = item.ProductId,
+                        OrderId = item.OrderId,
+                        InvoiceId = item.InvoiceId,
+                        Quantity = item.Quantity,
+                        Price = item.Price,
+                        ProductCategoryName = item.Product.Category.Name,
+                        ProductName = item.Product.Name,
+                        ProductQuantity = item.Product.Quantity,
+                    };
+                    orderProductResult.Add(orderProductVM);
+                }
+
+                string shipmentStatus = string.Empty;
+
+                switch (order.ShipmentStatus)
+                {
+                    case ShipmentStatuses.Received:
+                        shipmentStatus = "Recibido";
+                        break;
+                    case ShipmentStatuses.Preparing:
+                        shipmentStatus = "En Preparación";
+                        break;
+                    case ShipmentStatuses.Shipped:
+                        shipmentStatus = "Enviado";
+                        break;
+                    default:
+                        break;
+                }
+
+                var orderVM = new OrderViewModel
+                {
+                    Id = order.Id,
+                    Date = order.Date,
+                    ShipmentStatus = shipmentStatus,
+                    ClientName = $"{order.Client.LastName}, {order.Client.FirstName}",
+                    SellerName = $"{order.Seller.User.LastName}, {order.Seller.User.FirstName}",
+                    DateSent = order.DateSent,
+                    DateReceived = order.DateReceived,
+                    HasInvoice = order.HasInvoice,
+                    OrderProducts = orderProductResult,
+                };
+                if (order.TransportCompany != null)
+                {
+                    orderVM.TransportCompanyName = $"{order.TransportCompany.Name}";
+                }
+                result.Add(orderVM);
+            }
+
+            return result;
+        }
+
+
     }
 }

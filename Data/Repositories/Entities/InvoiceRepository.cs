@@ -66,6 +66,7 @@ namespace Data.Repositories.Entities
                 Date = dto.Date,
                 Amount = dto.Amount,
                 ClientId = dto.ClientId,
+                
             };
             _context.Set<Invoice>().Add(invoice);
             await _context.SaveChangesAsync();
