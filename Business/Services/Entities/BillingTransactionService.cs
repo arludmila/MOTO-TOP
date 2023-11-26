@@ -1,4 +1,5 @@
-﻿using Data.Repositories.Entities;
+﻿using Contracts.ViewModels;
+using Data.Repositories.Entities;
 using Entities.Core;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -20,6 +21,10 @@ namespace Business.Services.Entities
         public async Task<double> GetClientBalanceAsync(int id)
         {
             return await _btRepository.GetClientBalanceAsync(id);
+        }
+        public async Task<List<BillingTransactionViewModel>> GetAll()
+        {
+            return await _btRepository.GetAll();
         }
     }
 }

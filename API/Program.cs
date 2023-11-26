@@ -24,6 +24,8 @@ builder.Services.AddCors(options =>
                           policy.WithOrigins("https://localhost:7224");
                           policy.WithOrigins("https://localhost:7236");
                           policy.WithOrigins("https://localhost:7021");
+                          policy.WithOrigins("https://localhost:5501");
+                          policy.WithOrigins("https://localhost:5500");
                       });
 });
 builder.Services.AddCors(options =>

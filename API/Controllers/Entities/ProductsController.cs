@@ -22,5 +22,11 @@ namespace API.Controllers.Entities
         {
             return await _productService.GetAllAsync();
         }
+        [HttpGet("discounted")]
+        public async Task<List<DiscountedProductViewModel>> GetAllDiscountedProductsAsync()
+        {
+            return await _productService.GetAllDiscountedProductsAsync();
+        }
+
     }
 }

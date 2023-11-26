@@ -36,7 +36,7 @@ namespace API.Controllers
         }
 
         [HttpPost("total-sales")]
-        public async Task<List<Invoice>> GetTotalSales(DateFromToDto dto)
+        public async Task<List<InvoiceViewModel>> GetTotalSales(DateFromToDto dto)
         {
             return await _service.GetTotalSales(dto);
         }

@@ -1,11 +1,6 @@
 ﻿using Contracts.ViewModels;
 using Data.Repositories.Entities;
 using Entities.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Business.Services.Entities
 {
@@ -21,5 +16,10 @@ namespace Business.Services.Entities
         {
             return await _productRepository.GetAllAsync();
         }
+        public async Task<List<DiscountedProductViewModel>> GetAllDiscountedProductsAsync()
+        {
+            return await _productRepository.GetAllDiscountedProductsAsync();
         }
+
+    }
 }

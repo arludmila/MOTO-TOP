@@ -7,7 +7,7 @@ namespace Contracts.DTOs.Relationships
     {
         public int ProductId { get; set; }
         // rubro + nombre!!!
-        public string ProductName { get; set; }
+        public string? ProductName { get; set; }
         public Guid? OrderId { get; set; }
         public int? InvoiceId { get; set; }
         public int Quantity { get; set; }

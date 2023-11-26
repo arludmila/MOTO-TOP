@@ -20,5 +20,10 @@ namespace API.Controllers
         {
             return await _service.LoginMobile(loginRequest);
         }
+        [HttpPost("office-worker")]
+        public async Task<int> LoginDesktop(LoginRequestDto loginRequest)
+        {
+            return await _service.LoginDesktop(loginRequest);
+        }
     }
 }

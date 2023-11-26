@@ -1,6 +1,7 @@
 ﻿using Business.Services;
 using Business.Services.Entities;
 using Contracts.DTOs.Entities;
+using Contracts.ViewModels;
 using Entities.Core;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,6 +20,11 @@ namespace API.Controllers.Entities
         public async Task<double> GetClientBalance(int clientId)
         {
             return await _btService.GetClientBalanceAsync(clientId);
+        }
+        [HttpGet("view-models")]
+        public async Task<List<BillingTransactionViewModel>> GetAll()
+        {
+            return await _btService.GetAll();
         }
     }
 }

@@ -18,8 +18,7 @@ namespace Data
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            
-
+           
 
         }
         public void ConfigureServices(IServiceCollection services)
@@ -30,7 +29,7 @@ namespace Data
             base.OnModelCreating(modelBuilder);
             // claves compuestas
             modelBuilder.Entity<ProductDiscount>()
-              .HasKey(p => new { p.ProductId, p.ProductDiscountId });
+              .HasKey(p => new { p.ProductId, p.DiscountId });
            
             // enums a string
             modelBuilder

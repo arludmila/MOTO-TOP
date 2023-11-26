@@ -167,17 +167,17 @@ namespace DBSeeders
         }
         public static async Task GenerateSellerClients(int quantity)
         {
-            var sellers = await ApiHelper.GetAsync<Seller>("https://localhost:7215/api/sellers");
-            var clients = await ApiHelper.GetAsync<Client>("https://localhost:7215/api/clients");
-            var sellerClientsFaker = new Faker<SellerClientDto>()
-               .RuleFor(x => x.ClientId, f => f.PickRandom(clients).Id)
-               .RuleFor(x => x.SellerId, f => f.PickRandom(sellers).Id)
-               .RuleFor(x => x.Date, f => f.Date.Future());
-            for (int i = 0; i < quantity; i++)
-            {
-                var sellerClient = sellerClientsFaker.Generate();
-                Console.WriteLine(await ApiHelper.PostAsync("https://localhost:7215/api/seller-clients", sellerClient));
-            }
+            //var sellers = await ApiHelper.GetAsync<Seller>("https://localhost:7215/api/sellers");
+            //var clients = await ApiHelper.GetAsync<Client>("https://localhost:7215/api/clients");
+            //var sellerClientsFaker = new Faker<SellerClientDto>()
+            //   .RuleFor(x => x.ClientId, f => f.PickRandom(clients).Id)
+            //   .RuleFor(x => x.SellerId, f => f.PickRandom(sellers).Id)
+            //   .RuleFor(x => x.Date, f => f.Date.Future());
+            //for (int i = 0; i < quantity; i++)
+            //{
+            //    var sellerClient = sellerClientsFaker.Generate();
+            //    Console.WriteLine(await ApiHelper.PostAsync("https://localhost:7215/api/seller-clients", sellerClient));
+            //}
         }
         public static async Task GenerateOrders(int quantity)
         {

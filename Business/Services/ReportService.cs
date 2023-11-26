@@ -34,7 +34,7 @@ namespace Business.Services
             return await _repository.GetClientsBlances();
         }
         // Informe de Total de ventas en un periodo;
-        public async Task<List<Invoice>> GetTotalSales(DateFromToDto dto)
+        public async Task<List<InvoiceViewModel>> GetTotalSales(DateFromToDto dto)
         {
             return await _repository.GetTotalSales(dto);
         }

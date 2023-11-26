@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(MotoTopContext))]
-    [Migration("20231101051937_FirstCreate")]
+    [Migration("20231125235639_FirstCreate")]
     partial class FirstCreate
     {
         /// <inheritdoc />
@@ -249,6 +249,9 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ImagePath")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -421,7 +424,7 @@ namespace Data.Migrations
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProductDiscountId")
+                    b.Property<int>("DiscountId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DateEnd")
@@ -430,10 +433,7 @@ namespace Data.Migrations
                     b.Property<DateTime>("DateStart")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("DiscountId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ProductId", "ProductDiscountId");
+                    b.HasKey("ProductId", "DiscountId");
 
                     b.HasIndex("DiscountId");
 

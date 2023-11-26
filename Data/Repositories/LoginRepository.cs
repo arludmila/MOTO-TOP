@@ -18,6 +18,37 @@ namespace Data.Repositories
         {
             _context = context;
         }
+
+        public async Task<int> LoginDesktop(LoginRequestDto loginRequest)
+        {
+            var user = await _context.Set<User>().FirstOrDefaultAsync(u => u.Email.Equals(loginRequest.Email));
+            if (user == null)
+            {
+                return 0;
+            }
+            else
+            {
+                var passwordHasher = new PasswordHasher<string>();
+                var result = passwordHasher.VerifyHashedPassword(string.Empty, user.PasswordHash, loginRequest.Password);
+                if (result == PasswordVerificationResult.Failed)
+                {
+                    return 0;
+                }
+                else
+                {
+                    var officeWorker = await _context.Set<OfficeWorker>().FirstOrDefaultAsync(ow => ow.UserId.Equals(user.Id));
+                    if (officeWorker == null)
+                    {
+                        return 0;
+                    }
+                    else
+                    {
+                        return officeWorker.Id;
+                    }
+                }
+            }
+        }
+
         // devuelve el id correspondiente al user
         public async Task<int> LoginMobile(LoginRequestDto loginRequest)
         {

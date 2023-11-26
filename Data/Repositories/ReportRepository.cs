@@ -112,13 +112,53 @@ namespace Data.Repositories
 
         }
         // Informe de Total de ventas en un periodo;
-        public async Task<List<Invoice>> GetTotalSales(DateFromToDto dto)
+        public async Task<List<InvoiceViewModel>> GetTotalSales(DateFromToDto dto)
         {
+
             var invoices = await _context.Set<Invoice>()
                 .Where(i => i.Date >= dto.From && i.Date <= dto.To)
+                .Include(x => x.Order)
+                    .ThenInclude(o => o.Seller)
+                        .ThenInclude(s => s.User)
+                .Include(x => x.Client)
+                .Include(x => x.OfficeWorker)
+                    .ThenInclude(ow => ow.User)
                 .ToListAsync();
-                     
-            return invoices;
+            var billingTransactions = await _context.Set<BillingTransaction>()
+                .ToListAsync();
+            var result = new List<InvoiceViewModel>();
+            foreach (var invoice in invoices)
+            {
+                double payedAmount = 0;
+                foreach (var bt in billingTransactions)
+                {
+                    if (bt.InvoiceId == invoice.Id)
+                    {
+                        payedAmount += bt.Amount;
+                    }
+                }
+                var invoiceVM = new InvoiceViewModel
+                {
+                    Id = invoice.Id,
+                    OrderId = invoice.OrderId,
+                    Date = invoice.Date,
+                    TotalAmount = invoice.Amount,
+                    DebtAmount = payedAmount,
+                    ClientId = invoice.ClientId,
+                    ClientDocument = $"{invoice.Client.DocumentType}: {invoice.Client.DocumentNumber}",
+                    ClientName = $"{invoice.Client.LastName}, {invoice.Client.FirstName}",
+                };
+                if (invoice.Order != null)
+                {
+                    invoiceVM.SellerName = $"{invoice.Order.Seller.User.LastName}, {invoice.Order.Seller.User.LastName}";
+                }
+                else
+                {
+                    invoiceVM.SellerName = $"{invoice.OfficeWorker.User.LastName}, {invoice.OfficeWorker.User.FirstName}";
+                }
+                result.Add(invoiceVM);
+            }
+            return result;
 
         }
         // informe total de compras x clientes;

@@ -31,7 +31,7 @@ namespace Business.Services.Entities
         }
         public async Task<Invoice> CreateInvoiceAsync(Invoice invoice)
         {
-            return await _invoiceRepository.CreateInvoiceAsync(invoice);
+            return await _invoiceRepository.CreateAsync(invoice);
         }
         public async Task<bool> OrderHasInvoiceAsync(int orderId)
         {

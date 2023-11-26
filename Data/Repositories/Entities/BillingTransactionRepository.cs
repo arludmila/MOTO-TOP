@@ -1,4 +1,6 @@
-﻿using Entities.Core;
+﻿using Contracts.ViewModels;
+using Entities.Core;
+using Entities.Enums;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -24,6 +26,27 @@ namespace Data.Repositories.Entities
                 total += item.Amount;
             }
             return total;
+        }
+        public async Task<List<BillingTransactionViewModel>> GetAll()
+        {
+            var bts = await _context.Set<BillingTransaction>()
+                .Include(bt => bt.Client).ToListAsync();
+            var result = new List<BillingTransactionViewModel>();
+            foreach (var item in bts)
+            {
+                result.Add(new BillingTransactionViewModel
+                {
+                    Id = item.Id,
+                    PaymentMethod = item.PaymentMethod,
+                    Amount = item.Amount,
+                    DocumentType = item.DocumentType,
+                    DocumentNumber = item.DocumentNumber,
+                    InvoiceId = item.InvoiceId,
+                    ClientId = item.ClientId,
+                    ClientName = $"{item.Client.LastName}, {item.Client.FirstName}",
+                });
+            }
+            return result;
         }
 
     }

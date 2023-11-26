@@ -17,7 +17,11 @@ namespace Data.Repositories.Entities
         {
             var invoices = await _context.Set<Invoice>()
                 .Include(x => x.Order)
+                    .ThenInclude(o => o.Seller)
+                        .ThenInclude(s => s.User)
                 .Include(x => x.Client)
+                .Include(x => x.OfficeWorker)
+                    .ThenInclude(ow => ow.User)
                 .ToListAsync();
             var billingTransactions = await _context.Set<BillingTransaction>()
                 .ToListAsync();
@@ -43,11 +47,19 @@ namespace Data.Repositories.Entities
                     ClientDocument = $"{invoice.Client.DocumentType}: {invoice.Client.DocumentNumber}",
                     ClientName = $"{invoice.Client.LastName}, {invoice.Client.FirstName}",
                 };
+                if (invoice.Order != null)
+                {
+                    invoiceVM.SellerName = $"{invoice.Order.Seller.User.LastName}, {invoice.Order.Seller.User.LastName}";
+                }
+                else
+                {
+                    invoiceVM.SellerName = $"{invoice.OfficeWorker.User.LastName}, {invoice.OfficeWorker.User.FirstName}";
+                }
                 result.Add(invoiceVM);
             }
             return result;
         }
-        public override async Task<Invoice> CreateInvoiceAsync(Invoice invoice)
+        public override async Task<Invoice> CreateAsync(Invoice invoice)
         {
             var order = await _context.Set<Order>().FirstAsync(x => x.Id.Equals(invoice.OrderId));
             order.HasInvoice = true;
@@ -66,7 +78,7 @@ namespace Data.Repositories.Entities
                 Date = dto.Date,
                 Amount = dto.Amount,
                 ClientId = dto.ClientId,
-                
+                OfficeWorkerId = dto.OfficeWorkerId,
             };
             _context.Set<Invoice>().Add(invoice);
             await _context.SaveChangesAsync();

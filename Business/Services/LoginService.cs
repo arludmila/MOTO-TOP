@@ -16,6 +16,12 @@ namespace Business.Services
         {
             _repository = repository;
         }
+
+        public async Task<int> LoginDesktop(LoginRequestDto loginRequest)
+        {
+            return await _repository.LoginDesktop(loginRequest);
+        }
+
         public async Task<int> LoginMobile(LoginRequestDto loginRequest)
         {
             return await _repository.LoginMobile(loginRequest);
