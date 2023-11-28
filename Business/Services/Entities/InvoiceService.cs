@@ -37,5 +37,10 @@ namespace Business.Services.Entities
         {
             return await _invoiceRepository.OrderHasInvoiceAsync(orderId);
         }
+
+        public async Task<InvoiceViewModel> GetInvoiceVMAsync(int id)
+        {
+            return await _invoiceRepository.GetInvoiceVMAsync(id);
+        }
     }
 }

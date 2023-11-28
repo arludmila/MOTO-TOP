@@ -27,6 +27,11 @@ namespace API.Controllers.Entities
         {
             return await _invoiceService.GetAllVMAsync();
         }
+        [HttpGet("view-models/{id}")]
+        public async Task<InvoiceViewModel> GetInvoiceVMAsync(int id)
+        {
+            return await _invoiceService.GetInvoiceVMAsync(id);
+        }
         [HttpPost]
         public override async Task<IActionResult> CreateAsync([FromBody] InvoiceDto dto)
         {

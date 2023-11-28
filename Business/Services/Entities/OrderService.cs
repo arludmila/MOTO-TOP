@@ -28,7 +28,7 @@ namespace Business.Services.Entities
         {
             return await _orderRepository.GetOrderTotalAsync(id);
         }
-        public async Task<ShipmentStatuses> GetOrderStatusAsync(Guid id)
+        public async Task<string> GetOrderStatusAsync(Guid id)
         {
             return await _orderRepository.GetOrderStatusAsync(id);
         }

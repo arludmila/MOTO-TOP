@@ -2,6 +2,7 @@
 using Business.Services.Entities;
 using Contracts.DTOs.Entities;
 using Contracts.ViewModels;
+using Data.Repositories.Entities;
 using Entities.Core;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,6 +28,10 @@ namespace API.Controllers.Entities
         {
             return await _productService.GetAllDiscountedProductsAsync();
         }
-
+        [HttpGet("discounted-all")]
+        public async Task<List<DiscountedProductViewModel>> GetAllDiscountedProductsInactiveAsync()
+        {
+            return await _productService.GetAllDiscountedProductsInactiveAsync();
+        }
     }
 }

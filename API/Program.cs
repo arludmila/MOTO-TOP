@@ -24,10 +24,19 @@ builder.Services.AddCors(options =>
                           policy.WithOrigins("https://localhost:7224");
                           policy.WithOrigins("https://localhost:7236");
                           policy.WithOrigins("https://localhost:7021");
-                          policy.WithOrigins("https://localhost:5501");
+                          policy.WithOrigins("https://localhost:5501")
+                              .AllowAnyHeader()
+                              .AllowAnyMethod();
                           policy.WithOrigins("https://localhost:5500");
+                          policy.WithOrigins("https://arludmila.github.io")
+                              .AllowAnyHeader()
+                              .AllowAnyMethod();
+                          policy.WithOrigins("http://127.0.0.1:5501")  // Removed the single quote
+                              .AllowAnyHeader()
+                              .AllowAnyMethod();
                       });
 });
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowEmulator",

@@ -170,10 +170,23 @@ namespace Data.Repositories.Entities
 
             return total;
         }
-        public async Task<ShipmentStatuses> GetOrderStatusAsync(Guid id)
+        public async Task<string> GetOrderStatusAsync(Guid id)
         {
             var order = await _context.Orders.FirstOrDefaultAsync(x => x.Id.Equals(id));
-            return order.ShipmentStatus;
+
+            switch (order.ShipmentStatus)
+            {
+                case ShipmentStatuses.Received:
+                    return "Recibido";
+                case ShipmentStatuses.Preparing:
+                    return "En preparación";
+                case ShipmentStatuses.Shipped:
+                    return $"Enviado - Fecha de entrega esperada: {order.DateReceived.ToString("dd/MM/yyyy")}";
+
+                default:
+                    return "";
+            }
+
         }
         //
         public async Task<Order> CreateDetailedOrderAsync(OrderWithDetailsDto dto)

@@ -133,5 +133,53 @@ namespace Data.Repositories.Entities
             await _context.SaveChangesAsync();
 
         }
+
+        public async Task<InvoiceViewModel> GetInvoiceVMAsync(int id)
+        {
+            var invoice = await _context.Set<Invoice>()
+                 .Include(i => i.Client)
+                 .FirstOrDefaultAsync(i => i.Id == id);
+
+            var invoiceDetails = await _context.Set<OrderProduct>()
+                .Include(x => x.Product)
+                    .ThenInclude(product => product.Category)
+                .Where(x => x.InvoiceId == id)
+                .ToListAsync();
+
+            var invoiceDetailsVM = new List<OrderProductViewModel>();
+
+            foreach (var item in invoiceDetails)
+            {
+                var orderProductVM = new OrderProductViewModel()
+                {
+                    Id = item.Id,
+                    ProductId = item.ProductId,
+                    OrderId = item.OrderId,
+                    InvoiceId = item.InvoiceId,
+                    Quantity = item.Quantity,
+                    Price = item.Price,
+                    ProductCategoryName = item.Product.Category.Name,
+                    ProductName = item.Product.Name,
+                    ProductQuantity = item.Product.Quantity,
+                };
+                invoiceDetailsVM.Add(orderProductVM);
+            }
+
+            var invoiceVM = new InvoiceViewModel()
+            {
+                Id = id,
+                ClientId = invoice.ClientId,
+                ClientDocument = $"{invoice.Client.DocumentType}: {invoice.Client.DocumentNumber}",
+                ClientName = $"{invoice.Client.LastName}, {invoice.Client.FirstName}",
+                Date = DateTime.Now,
+                TotalAmount = invoice.Amount,
+            };
+            invoiceVM.InvoiceDetails = invoiceDetailsVM;
+
+
+            return invoiceVM;
+
+
+        }
     }
 }

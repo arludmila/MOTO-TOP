@@ -1,10 +1,13 @@
 ﻿using Business.Services;
 using Contracts.Utils;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
     [ApiController]
+    [EnableCors("_myAllowSpecificOrigins")]
+
     public class BaseController<TEntity, TDto, TId> : ControllerBase where TEntity : class, new()
     {
         protected readonly GenericService<TEntity, TId> _service;

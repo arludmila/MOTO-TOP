@@ -1,4 +1,5 @@
-﻿using OfficeOpenXml.Attributes;
+﻿using Entities.Relationships;
+using OfficeOpenXml.Attributes;
 
 namespace Entities.Core
 {
@@ -16,5 +17,8 @@ namespace Entities.Core
         public int? OfficeWorkerId { get; set; }
         [EpplusIgnore]
         public OfficeWorker? OfficeWorker { get; set; }
+        [EpplusIgnore]
+        // testing...
+        public List<OrderProduct>? InvoiceDetails { get; set; } = new List<OrderProduct>();
     }
 }

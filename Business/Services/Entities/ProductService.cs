@@ -20,6 +20,9 @@ namespace Business.Services.Entities
         {
             return await _productRepository.GetAllDiscountedProductsAsync();
         }
-
+        public async Task<List<DiscountedProductViewModel>> GetAllDiscountedProductsInactiveAsync()
+        {
+            return await _productRepository.GetAllDiscountedProductsInactiveAsync();
+        }
     }
 }
